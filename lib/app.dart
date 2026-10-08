@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'core/l10n/app_localizations.dart';
+import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'features/settings/data/settings_controller.dart';
 
@@ -13,18 +14,14 @@ class PerisaiApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsController>();
 
-    return MaterialApp(
+    return MaterialApp.router(
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
       locale: settings.locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: Builder(
-        builder: (context) => Scaffold(
-          body: Center(child: Text(AppLocalizations.of(context).appTitle)),
-        ),
-      ),
+      routerConfig: appRouter,
     );
   }
 }
