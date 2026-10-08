@@ -1,0 +1,15 @@
+{
+  "@@locale": "ms",
+  "appTitle": "PERISAI",
+  "tabHome": "Utama",
+  "tabFamily": "Keluarga",
+  "tabRadar": "Radar",
+  "tabSettings": "Tetapan",
+  "comingSoon": "Bahagian ini sedang dibina.",
+  "@comingSoon": {
+    "description": "Placeholder shown on tabs that are not built yet."
+  },
+  "settingsLanguage": "Bahasa",
+  "languageMalay": "Bahasa Melayu",
+  "languageEnglish": "English"
+}

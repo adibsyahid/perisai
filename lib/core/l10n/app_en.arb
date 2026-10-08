@@ -1,0 +1,12 @@
+{
+  "@@locale": "en",
+  "appTitle": "PERISAI",
+  "tabHome": "Home",
+  "tabFamily": "Family",
+  "tabRadar": "Radar",
+  "tabSettings": "Settings",
+  "comingSoon": "This section is being built.",
+  "settingsLanguage": "Language",
+  "languageMalay": "Bahasa Melayu",
+  "languageEnglish": "English"
+}

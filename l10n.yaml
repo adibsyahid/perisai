@@ -1,0 +1,6 @@
+# Bahasa Melayu is the template (default). English is the second language.
+arb-dir: lib/core/l10n
+template-arb-file: app_ms.arb
+output-localization-file: app_localizations.dart
+# Lets us write AppLocalizations.of(context).x without a "!" everywhere.
+nullable-getter: false
