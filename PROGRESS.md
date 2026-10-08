@@ -4,7 +4,7 @@ _Last updated: 8 Oct 2026 (end of P0 session)_
 
 | Phase | Status |
 |---|---|
-| P0 Setup | Code done. Waiting for Ahmad to test on his phone. |
+| P0 Setup | Runs on Ahmad's OPPO A92 (8 Oct). Waiting for Ahmad to finish the manual tab/language check. |
 | P1 Firebase + Imbas | Not started |
 | P2 Share | Not started |
 | P3 Keluarga | Not started |
@@ -41,6 +41,10 @@ _Last updated: 8 Oct 2026 (end of P0 session)_
 - All Android SDK licenses were accepted on 8 Oct. `flutter doctor` now shows no issues.
 - Flutter 3.41.6 is installed and a newer stable exists. We stay on 3.41.6 unless something needs the upgrade.
 - On Windows, git prints "LF will be replaced by CRLF" warnings. They are harmless.
+- Test phone: OPPO A92 (model CPH2059, Android 11, adb id `b266a0ba`). If `adb devices` shows nothing, the phone's
+  USB mode has probably fallen back to audio/MIDI. Pull down the notification bar and choose **File transfer**.
+- In debug mode the first launch stutters ("Skipped 519 frames" in the log). This is normal for debug builds.
+  Check smoothness with `flutter run --release`.
 
 ## What Ahmad must do now
 1. Connect the phone (USB or wireless debugging) and run `flutter run`. Check the P0 test list:
