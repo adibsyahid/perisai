@@ -38,14 +38,12 @@ _Last updated: 8 Oct 2026 (end of P0 session)_
 - The language choice is not saved yet, so it resets to BM after a restart. Save it with `shared_preferences` once we add that package in P1.
 - `google_fonts` downloads Plus Jakarta Sans on first launch (needs internet once, then it is cached).
   If we want fully offline fonts, bundle the TTF files in P5.
-- `flutter doctor` reports that some Android SDK licenses are not accepted. `flutter build apk --debug`
-  still passed on 8 Oct, but later plugins may need SDK parts that only download after the licenses are accepted.
+- All Android SDK licenses were accepted on 8 Oct. `flutter doctor` now shows no issues.
 - Flutter 3.41.6 is installed and a newer stable exists. We stay on 3.41.6 unless something needs the upgrade.
 - On Windows, git prints "LF will be replaced by CRLF" warnings. They are harmless.
 
 ## What Ahmad must do now
-1. Accept the Android licenses: run `flutter doctor --android-licenses` and answer `y` to each one.
-2. Connect the phone (USB or wireless debugging) and run `flutter run`. Check the P0 test list:
+1. Connect the phone (USB or wireless debugging) and run `flutter run`. Check the P0 test list:
    - The app opens with the name **PERISAI** and a light grey-blue background.
    - The bottom bar shows 4 tabs: **Utama · Keluarga · Radar · Tetapan**. Each tab opens.
    - Radar has a dark navy background.
