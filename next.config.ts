@@ -3,6 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
+  // Bundle firebase-admin instead of loading it with Node's require() at runtime.
+  // On Vercel, its token checker (jwks-rsa) failed to require() the ESM-only "jose"
+  // package (ERR_REQUIRE_ESM); bundling resolves that at build time.
+  transpilePackages: ["firebase-admin"],
   turbopack: {
     rules: {
       "*.css": {
