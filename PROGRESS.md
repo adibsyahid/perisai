@@ -1,14 +1,14 @@
 # PERISAI progress
 
-_Last updated: 14 Oct 2026 (P0 deployed to Vercel, waiting for Ahmad's phone test)_
+_Last updated: 14 Oct 2026 (P0 done; P1 starting with Ahmad's Firebase + Gemini accounts)_
 
 Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**. The old Flutter P0 is in git tag `flutter-p0`.
 
 ## Schedule (revised 14 Oct)
 | Phase | Target | Status |
 |---|---|---|
-| P0 Web setup | 14 Oct | Live on Vercel. Waiting for Ahmad's OPPO test. |
-| P1 Imbas | 14–15 Oct | Not started |
+| P0 Web setup | 14 Oct | **Done.** Passed on the OPPO A92 (installed as app, standalone, 4 tabs, Radar dark, BM/EN saved). |
+| P1 Imbas | 14–15 Oct | Waiting for Ahmad: Firebase project + Gemini API key |
 | P2 Share + paste | 16 Oct | Not started |
 | P3 Keluarga | 16–17 Oct | Not started |
 | P4 Radar | 18 Oct | Not started |
@@ -47,17 +47,22 @@ Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**
 - Vercel: Hobby plan (free), team `ahmad-adib`, project `perisai`, auto-deploys every push to `main`.
   Checked the live site: all 4 tabs, manifest + icons, SW active, security headers (plus Vercel's HSTS).
 
-## Next
-1. **Ahmad:** P0 phone test on the OPPO (list below). Then P0 is done.
-2. P1 Imbas: Ahmad creates the Firebase project (Spark) + web app + service account key, and a Gemini API key
-   in Google AI Studio. Claude gives click-by-click steps at the start of P1.
+## Next: P1 Imbas
+1. **Ahmad (in progress 14 Oct):** Firebase project `perisai` on Spark, Analytics off; Anonymous sign-in on;
+   Firestore in `asia-southeast1` (production mode); a Web app registered; a service account key JSON saved
+   **outside** the project folder; a Gemini API key from Google AI Studio. No secrets in the chat or in git.
+2. Claude: `.env.example` with variable names, then guide Ahmad to fill `.env.local` and the Vercel env vars.
+3. Claude: anonymous auth, `/api/scan` (token check, heuristics, redaction, Gemini + schema), Utama inputs,
+   scanning animation, result screen, voice, local history.
+
+## P0 phone test result (14 Oct, OPPO A92, Chrome)
+- Chrome menu shows **"Install and create shortcut"** (new name for installing a PWA). Installed fine, opens
+  with no address bar, bottom nav clears the gesture bar.
+- All 4 tabs open, Radar turns dark, English is still selected after closing and reopening the app.
 
 ## What Ahmad must do now
-1. On the OPPO, open https://perisai-three.vercel.app in Chrome and check:
-   - PERISAI opens with the blue shield logo and the "Ragu dengan mesej?" card.
-   - Bottom bar: **Utama · Keluarga · Radar · Tetapan**. Each tab opens; Radar is dark navy.
-   - Tetapan → **English**: everything switches to English. Close Chrome, open again: still English. Switch back to BM.
-   - Chrome menu (⋮) → **Install app** / **Add to Home screen**. The PERISAI icon appears; opening it shows no browser bar.
+Create the Firebase project and the Gemini API key (click-by-click steps are in the 14 Oct chat; summary in
+"Next" step 1). Keep the service account JSON outside `C:\Projects\perisai`. Never paste keys into the chat.
 
 ## Known issues / notes
 - `npm audit` shows 5 high warnings in `eslint-config-next`'s dependencies (lint tooling only, not shipped to phones).
