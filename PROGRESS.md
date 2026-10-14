@@ -1,6 +1,6 @@
 # PERISAI progress
 
-_Last updated: 14 Oct 2026 (P0 done; P1 starting with Ahmad's Firebase + Gemini accounts)_
+_Last updated: 14 Oct 2026 (P0 done; P1 accounts and secrets ready, P1 code not started)_
 
 Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**. The old Flutter P0 is in git tag `flutter-p0`.
 
@@ -8,7 +8,7 @@ Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**
 | Phase | Target | Status |
 |---|---|---|
 | P0 Web setup | 14 Oct | **Done.** Passed on the OPPO A92 (installed as app, standalone, 4 tabs, Radar dark, BM/EN saved). |
-| P1 Imbas | 14–15 Oct | Waiting for Ahmad: Firebase project + Gemini API key |
+| P1 Imbas | 14–15 Oct | Accounts + secrets ready (local and Vercel). Code next. |
 | P2 Share + paste | 16 Oct | Not started |
 | P3 Keluarga | 16–17 Oct | Not started |
 | P4 Radar | 18 Oct | Not started |
@@ -47,13 +47,28 @@ Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**
 - Vercel: Hobby plan (free), team `ahmad-adib`, project `perisai`, auto-deploys every push to `main`.
   Checked the live site: all 4 tabs, manifest + icons, SW active, security headers (plus Vercel's HSTS).
 
-## Next: P1 Imbas
-1. **Ahmad (in progress 14 Oct):** Firebase project `perisai` on Spark, Analytics off; Anonymous sign-in on;
-   Firestore in `asia-southeast1` (production mode); a Web app registered; a service account key JSON saved
-   **outside** the project folder; a Gemini API key from Google AI Studio. No secrets in the chat or in git.
-2. Claude: `.env.example` with variable names, then guide Ahmad to fill `.env.local` and the Vercel env vars.
-3. Claude: anonymous auth, `/api/scan` (token check, heuristics, redaction, Gemini + schema), Utama inputs,
-   scanning animation, result screen, voice, local history.
+### P1 setup: accounts and secrets (14 Oct)
+- Firebase project **perisai** (ID `perisai-3f1f6`), Spark plan, Gemini-in-Firebase off, Analytics off.
+  Owned by Ahmad's personal Google account (the one shown on the Firebase console avatar).
+- Authentication: **Anonymous** on, auto clean-up **off** (it would delete family links after 30 days).
+- Firestore `(default)` in **asia-southeast1**, production mode, no scheduled backups (they need Blaze).
+- Web app `perisai-web` registered. Its public config is in `.env.local` and Vercel.
+- Service account JSON lives in `C:\Users\acer_\perisai-secrets\` (outside the repo).
+  `node scripts/setup-env.mjs "<json path>"` copies it into `.env.local` without printing it.
+- Gemini API key `perisai-server` (AI Studio, project `perisai-3f1f6`). Made in normal Chrome, because AI Studio
+  returns 401/403 inside the desktop app's Browser pane. The AI Studio key page is now `/api-keys`.
+- `.env.local` checked: all values filled, right format, never shown. `.env.example` lists the names.
+- Vercel (team `ahmad-adib`, logged in inside the Browser pane): all 9 variables set for Production and Preview.
+  Ahmad's Chrome is logged in to a **different** Vercel account (old projects from the `-droid` GitHub);
+  PERISAI is not there.
+- Gemini model test (14 Oct ~18:00): `gemini-3.8-flash`, `3.7`, `3.5` and `flash-latest` timed out or returned
+  503 "high demand". Flash-Lite works: `gemini-3.1-flash-lite` 1.7 s, `gemini-3.5-flash-lite` 5.5 s.
+  `gemini-2.5-flash` is closed to new users. Plan: one model setting; try the latest Flash with a short
+  timeout, then fall back to Flash-Lite. Re-test the Flash models on 15 Oct.
+
+## Next: P1 Imbas code
+Read BLUEPRINT sections 5, 6 (F1) and 7 first. Then: anonymous auth, `/api/scan` (token check, heuristics,
+redaction, Gemini + schema + model fallback), Utama inputs, scanning animation, result screen, voice, local history.
 
 ## P0 phone test result (14 Oct, OPPO A92, Chrome)
 - Chrome menu shows **"Install and create shortcut"** (new name for installing a PWA). Installed fine, opens
@@ -61,8 +76,9 @@ Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**
 - All 4 tabs open, Radar turns dark, English is still selected after closing and reopening the app.
 
 ## What Ahmad must do now
-Create the Firebase project and the Gemini API key (click-by-click steps are in the 14 Oct chat; summary in
-"Next" step 1). Keep the service account JSON outside `C:\Projects\perisai`. Never paste keys into the chat.
+- Optional: in Vercel, mark `FIREBASE_PRIVATE_KEY` and `GEMINI_API_KEY` as **Sensitive** (⋯ → Edit).
+- Optional: turn on 2FA for Vercel and GitHub before submission.
+- Nothing else until the P1 code is ready for a phone test. Never paste keys into the chat.
 
 ## Known issues / notes
 - `npm audit` shows 5 high warnings in `eslint-config-next`'s dependencies (lint tooling only, not shipped to phones).
