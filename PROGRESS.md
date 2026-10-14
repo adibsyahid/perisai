@@ -1,6 +1,6 @@
 # PERISAI progress
 
-_Last updated: 14 Oct 2026 (P0 done; P1 accounts and secrets ready, P1 code not started)_
+_Last updated: 14 Oct 2026, evening (P1 Imbas code done and live; waiting for Ahmad's phone test)_
 
 Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**. The old Flutter P0 is in git tag `flutter-p0`.
 
@@ -8,7 +8,7 @@ Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**
 | Phase | Target | Status |
 |---|---|---|
 | P0 Web setup | 14 Oct | **Done.** Passed on the OPPO A92 (installed as app, standalone, 4 tabs, Radar dark, BM/EN saved). |
-| P1 Imbas | 14–15 Oct | Accounts + secrets ready (local and Vercel). Code next. |
+| P1 Imbas | 14–15 Oct | Code done and live (scan → verdict in ~2.3 s on Vercel). Waiting for OPPO test. |
 | P2 Share + paste | 16 Oct | Not started |
 | P3 Keluarga | 16–17 Oct | Not started |
 | P4 Radar | 18 Oct | Not started |
@@ -66,9 +66,37 @@ Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**
   `gemini-2.5-flash` is closed to new users. Plan: one model setting; try the latest Flash with a short
   timeout, then fall back to Flash-Lite. Re-test the Flash models on 15 Oct.
 
-## Next: P1 Imbas code
-Read BLUEPRINT sections 5, 6 (F1) and 7 first. Then: anonymous auth, `/api/scan` (token check, heuristics,
-redaction, Gemini + schema + model fallback), Utama inputs, scanning animation, result screen, voice, local history.
+### P1 Imbas code (14 Oct)
+- Packages: `firebase`, `firebase-admin`, `@google/genai`, `idb-keyval` (all in BLUEPRINT).
+- `src/lib/scan-types.ts`: shared shapes (verdicts, scam types, request/result, error codes).
+- `src/lib/firebase-client.ts`: anonymous sign-in on first scan, `getIdToken()`.
+  `src/lib/firebase-admin.ts`: `verifyRequest()` checks the Bearer ID token (server only).
+- `src/lib/redact.ts` (phone side): removes IC numbers (dashed always; 12 digits only when the date and
+  place-of-birth code are valid, so bank accounts survive) and Luhn-valid card numbers. Keeps phones and accounts.
+- `src/lib/heuristics.ts`: the BLUEPRINT link rules with points (apk, IP host, punycode, brand lookalike,
+  shortener, risky TLD, no https). Tested on sample messages.
+- `src/lib/gemini.ts`: BLUEPRINT system instruction and schema (`responseJsonSchema`), temperature 0.2,
+  20 s total budget, model fallback list (default `gemini-3.5-flash-lite` then `gemini-3.1-flash-lite`,
+  override with `GEMINI_MODELS`). The Malay language name says "as used in Malaysia, never Indonesian".
+- `src/app/api/scan/route.ts`: token check → rate limit (20 per 10 min per uid, in memory) → heuristics →
+  Gemini → combine (`max` score, verdict from score, heuristic flags appended, TIDAK_PASTI kept when unsure).
+  Never logs or stores content.
+- Utama: Imbas Sekarang (text sheet), Tampal & Imbas (clipboard), 4 tiles (message, screenshot, link, number),
+  recent scans (IndexedDB, last 30, redacted 80-char preview, no images).
+- `/imbas`: shield scanning animation, result with colour flood, score ring, headline, summary, red-flag cards
+  with the quote highlighted, actions checklist, voice (auto on fresh result, Dengar/Berhenti button),
+  vibrate on SCAM, 997 card for SCAM/MENCURIGAKAN, Semak Mule link when numbers are found (not for SELAMAT).
+- Next 16 keeps visited pages alive (`<Activity>`). `/imbas` and the recent list are keyed by
+  `useRouter().bfcacheId`, otherwise a second scan showed the first result.
+- Vercel fixes: `engines.node = 24.x`, and `transpilePackages: ["firebase-admin"]` (its token checker failed
+  with ERR_REQUIRE_ESM on Vercel when loaded at runtime).
+- Tested: localhost (parcel → SCAM 95, bank notice → SELAMAT 0, STR aid → SCAM) and live Vercel
+  ("Hi mak, nombor baru" → SCAM, Menyamar Keluarga, 2.3 s).
+
+## Next
+1. **Ahmad:** P1 phone test on the OPPO (list below).
+2. P2 Share + paste: `share_target` in the manifest and a `/share` page that starts the scan.
+3. P3 Keluarga (needs 2 phones, VAPID keys, Firestore rules).
 
 ## P0 phone test result (14 Oct, OPPO A92, Chrome)
 - Chrome menu shows **"Install and create shortcut"** (new name for installing a PWA). Installed fine, opens
@@ -76,11 +104,21 @@ redaction, Gemini + schema + model fallback), Utama inputs, scanning animation, 
 - All 4 tabs open, Radar turns dark, English is still selected after closing and reopening the app.
 
 ## What Ahmad must do now
+P1 phone test on the OPPO (open the installed PERISAI app; it updates itself from Vercel):
+1. Utama shows **Imbas Sekarang**, **Tampal & Imbas**, 4 tiles and "Imbasan terkini".
+2. Imbas Sekarang → paste a parcel scam → red **SCAM** screen within ~5 s, highlighted flags, voice reads it.
+3. Copy a real bank/courier SMS → **Tampal & Imbas** → SELAMAT or MENCURIGAKAN (not SCAM).
+4. **Pilih screenshot** → a scam screenshot → verdict.
+5. Back on Utama the scans appear under "Imbasan terkini"; tapping one reopens it.
+6. Tetapan → English → scan again: the result is in English.
 - Optional: in Vercel, mark `FIREBASE_PRIVATE_KEY` and `GEMINI_API_KEY` as **Sensitive** (⋯ → Edit).
 - Optional: turn on 2FA for Vercel and GitHub before submission.
-- Nothing else until the P1 code is ready for a phone test. Never paste keys into the chat.
 
 ## Known issues / notes
+- Rate limiting is in memory, per server instance (fine for the prototype, not for production).
+- Firestore Security Rules are still the default "deny all". P1 does not read Firestore; set real rules in P3.
+- "Maklumkan Penjaga" button and the "Dilindungi oleh N penjaga" card come with P3.
+- Voice depends on the phone's installed voices. If no Malay voice exists, it falls back to Indonesian, then English.
 - `npm audit` shows 5 high warnings in `eslint-config-next`'s dependencies (lint tooling only, not shipped to phones).
   The suggested `--force` fix downgrades Next's ESLint config, so we leave it.
 - The phone's status bar stays light on the Radar tab (theme colour is global). Fine for now; revisit in P5.
