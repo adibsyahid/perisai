@@ -330,7 +330,8 @@ service cloud.firestore {
 
 **Secrets** go in `.env.local` (gitignored) and in Vercel Environment Variables:
 - `GEMINI_API_KEY`
-- `FIREBASE_SERVICE_ACCOUNT` (base64 JSON)
+- `FIREBASE_CLIENT_EMAIL`, `FIREBASE_PRIVATE_KEY` (from the service account JSON; `scripts/setup-env.mjs` fills them)
+- Optional `GEMINI_MODELS` (comma-separated model order; default Flash-Lite first, see `src/lib/gemini.ts`)
 - `NEXT_PUBLIC_FIREBASE_*`
 - `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`
 
