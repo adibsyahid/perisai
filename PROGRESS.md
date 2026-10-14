@@ -1,13 +1,13 @@
 # PERISAI progress
 
-_Last updated: 14 Oct 2026 (P0 Web setup, waiting for Ahmad's GitHub + Vercel step)_
+_Last updated: 14 Oct 2026 (P0 deployed to Vercel, waiting for Ahmad's phone test)_
 
 Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**. The old Flutter P0 is in git tag `flutter-p0`.
 
 ## Schedule (revised 14 Oct)
 | Phase | Target | Status |
 |---|---|---|
-| P0 Web setup | 14 Oct | Code done, builds clean. Waiting for GitHub repo + Vercel import (Ahmad), then phone test. |
+| P0 Web setup | 14 Oct | Live on Vercel. Waiting for Ahmad's OPPO test. |
 | P1 Imbas | 14–15 Oct | Not started |
 | P2 Share + paste | 16 Oct | Not started |
 | P3 Keluarga | 16–17 Oct | Not started |
@@ -41,18 +41,19 @@ Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**
 - Checked in the Browser pane at 375×812: all 4 tabs, BM→EN switch and back, language survives reload, Radar dark,
   no console errors, SW active, manifest has 3 icons. `npm run lint`, `npx tsc --noEmit`, `npm run build` all clean.
 
+- GitHub repo **adibsyahid/perisai** (public). Remote URL includes the username
+  (`https://adibsyahid@github.com/...`) so Git Credential Manager uses `adibsyahid`, not the other stored
+  account `ahmadaadibsyahid-droid`. Tag `flutter-p0` is pushed too.
+- Vercel: Hobby plan (free), team `ahmad-adib`, project `perisai`, auto-deploys every push to `main`.
+  Checked the live site: all 4 tabs, manifest + icons, SW active, security headers (plus Vercel's HSTS).
+
 ## Next
-1. **Ahmad:** create the GitHub repo and import it into Vercel (steps are in the chat of 14 Oct; repeated below).
-2. Claude: add the remote, push, confirm the Vercel URL works.
-3. **Ahmad:** P0 phone test on the OPPO (list below). Then P0 is done.
-4. P1 Imbas: Ahmad creates the Firebase project (Spark) + web app + service account key, and a Gemini API key
+1. **Ahmad:** P0 phone test on the OPPO (list below). Then P0 is done.
+2. P1 Imbas: Ahmad creates the Firebase project (Spark) + web app + service account key, and a Gemini API key
    in Google AI Studio. Claude gives click-by-click steps at the start of P1.
 
 ## What Ahmad must do now
-1. GitHub: create an **empty** repo named `perisai` (no README, no .gitignore, no licence). Private or public is fine.
-2. Tell Claude the repo URL. Claude pushes the code.
-3. Vercel: sign in with GitHub → Add New → Project → import `perisai` → Deploy (all defaults).
-4. On the OPPO, open the Vercel URL in Chrome and check:
+1. On the OPPO, open https://perisai-three.vercel.app in Chrome and check:
    - PERISAI opens with the blue shield logo and the "Ragu dengan mesej?" card.
    - Bottom bar: **Utama · Keluarga · Radar · Tetapan**. Each tab opens; Radar is dark navy.
    - Tetapan → **English**: everything switches to English. Close Chrome, open again: still English. Switch back to BM.
@@ -69,4 +70,4 @@ Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**
   from older versions. Keep it.
 
 ## Live URL
-None yet (waiting for Vercel).
+https://perisai-three.vercel.app (production, branch `main`)
