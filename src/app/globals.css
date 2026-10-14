@@ -1,0 +1,111 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* PERISAI design tokens (BLUEPRINT section 4).
+   Brand colours live here once; shadcn's variables point at them so every
+   component picks up the same palette. Light theme only: the Radar tab uses
+   its own dark "command centre" colours. */
+:root {
+  --navy: #0b1b3f;
+  --perisai-blue: #1d4ed8;
+  --surface: #f6f7fb;
+  --danger: #dc2626;
+  --warning: #f59e0b;
+  --safe: #16a34a;
+  --radar-bg: #07122b;
+
+  --background: var(--surface);
+  --foreground: var(--navy);
+  --card: #ffffff;
+  --card-foreground: var(--navy);
+  --popover: #ffffff;
+  --popover-foreground: var(--navy);
+  --primary: var(--perisai-blue);
+  --primary-foreground: #ffffff;
+  --secondary: #e8edfb;
+  --secondary-foreground: var(--navy);
+  --muted: #eef1f7;
+  /* #55607a on white is ~6:1, safely above WCAG AA for small text. */
+  --muted-foreground: #55607a;
+  --accent: #e8edfb;
+  --accent-foreground: var(--navy);
+  --destructive: var(--danger);
+  --border: #e3e7f0;
+  --input: #d5dbe8;
+  --ring: var(--perisai-blue);
+
+  --radius: 1.25rem; /* 20px cards */
+  --radius-button: 1rem; /* 16px buttons */
+
+  /* Body text is 18px; large-text mode (P5) bumps this to 22px. */
+  --text-body: 1.125rem;
+  --app-max-width: 480px;
+  --nav-height: 4.5rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-navy: var(--navy);
+  --color-perisai: var(--perisai-blue);
+  --color-surface: var(--surface);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-safe: var(--safe);
+  --color-radar: var(--radar-bg);
+
+  --font-sans: var(--font-jakarta);
+  --font-heading: var(--font-jakarta);
+
+  --radius-sm: calc(var(--radius) * 0.4);
+  --radius-md: calc(var(--radius) * 0.6);
+  --radius-lg: calc(var(--radius) * 0.8);
+  --radius-xl: var(--radius-button);
+  --radius-2xl: var(--radius);
+  --radius-3xl: calc(var(--radius) * 1.4);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-size: var(--text-body);
+    line-height: 1.55;
+  }
+}
+
+/* Honour reduced motion everywhere, including Motion's JS animations
+   (they read the same media query through useReducedMotion). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

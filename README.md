@@ -1,17 +1,11 @@
-# perisai
+# PERISAI
 
-A new Flutter project.
+AI-powered family anti-scam app for Malaysia. An installable web app (PWA) built with Next.js + TypeScript.
+Entry for i3EC'26 (Tertiary Student, Innovative Product).
 
-## Getting Started
+```bash
+npm install
+npm run dev
+```
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Open http://localhost:3000. See `BLUEPRINT.md` for the design and `PROGRESS.md` for the current status.
