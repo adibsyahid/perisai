@@ -1,0 +1,39 @@
+rules_version = '2';
+// PERISAI Firestore Security Rules (BLUEPRINT section 7).
+// Paste this into Firebase console → Firestore Database → Rules → Publish.
+//
+// Zero-trust client: phones may only READ what belongs to them. Every write,
+// except a user's own profile, goes through our API routes (Admin SDK).
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function me() { return request.auth.uid; }
+
+    // Own profile only: name, state, preferences.
+    match /users/{uid} {
+      allow read, write: if signedIn() && me() == uid;
+    }
+
+    // Family links: readable by the two people in the link.
+    match /guardianships/{id} {
+      allow read: if signedIn() &&
+        (resource.data.guardianUid == me() || resource.data.protectedUid == me());
+    }
+
+    // Alerts: readable by the protected person and their guardians. No message content inside.
+    match /alerts/{id} {
+      allow read: if signedIn() &&
+        (me() in resource.data.guardianUids || resource.data.protectedUid == me());
+    }
+
+    // Anonymous Radar reports: scam type, verdict, state, time. Nothing personal.
+    match /reports/{id} {
+      allow read: if signedIn();
+    }
+
+    // pairCodes, pushSubs and anything else: server only.
+    match /{other=**} {
+      allow read, write: if false;
+    }
+  }
+}
