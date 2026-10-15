@@ -22,11 +22,14 @@ export async function createPairCode(uid: string, name: string): Promise<{ code:
     try {
       await codes.doc(code).create({ uid, name, expiresAt });
       return { code, expiresAt };
-    } catch {
-      // Code already in use; try another one.
+    } catch (error) {
+      // Code 6 = ALREADY_EXISTS: someone holds this code, try another. Anything else is a real failure.
+      if ((error as { code?: number | string }).code !== 6 && (error as { code?: string }).code !== "already-exists") {
+        throw error;
+      }
     }
   }
-  throw new Error("Could not create a pairing code");
+  throw new Error("Could not find a free pairing code");
 }
 
 export type JoinResult =
