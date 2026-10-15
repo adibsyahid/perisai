@@ -7,6 +7,13 @@ const nextConfig: NextConfig = {
   // On Vercel, its token checker (jwks-rsa) failed to require() the ESM-only "jose"
   // package (ERR_REQUIRE_ESM); bundling resolves that at build time.
   transpilePackages: ["firebase-admin"],
+  experimental: {
+    // Keep server code un-minified. Firestore's REST serializer recognises big
+    // numbers by the class name "Long"; minification renames that class, and every
+    // Admin write with a timestamp failed on Vercel ("toProto3JSON: don't know how
+    // to convert value"). Phone (client) code is still minified.
+    turbopackMinify: { server: false, client: true },
+  },
   turbopack: {
     rules: {
       "*.css": {
