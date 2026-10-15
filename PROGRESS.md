@@ -1,6 +1,6 @@
 # PERISAI progress
 
-_Last updated: 15 Oct 2026 (P0–P4 done and live; P5 Polish next)_
+_Last updated: 15 Oct 2026 (P0–P5 done and live; P6 evaluation next)_
 
 Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**. The old Flutter P0 is in git tag `flutter-p0`.
 
@@ -12,7 +12,7 @@ Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**
 | P2 Share + paste | 16 Oct | **Done** (15 Oct). WhatsApp text: Copy → Tampal & Imbas. |
 | P3 Keluarga | 16–17 Oct | **Done** (15 Oct). Pairing + SCAM push alert passed (laptop "Mak" + OPPO "Anak"). |
 | P4 Radar | 18 Oct | **Done** (15 Oct). Live map, counter, chart, feed; demo data via /eval. |
-| P5 Polish | 19 Oct | Not started |
+| P5 Polish | 19 Oct | Done in code (15 Oct). Lighthouse a11y 100. Waiting for OPPO check. |
 | P6 Eval + launch | 20 Oct | Not started |
 | Video + poster | 20–22 Oct | Submit by 22 Oct (hard deadline 23 Oct) |
 
@@ -161,10 +161,25 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
   to 151 and put "Kerja Part-Time Palsu dikesan di Pahang · sekarang" on top, without a reload.
 - Firestore now holds 150 demo reports (isDemo). Clear them from `/eval` → Padam data demo when not needed.
 
+### P5 Polish (15 Oct): done in code, waiting for Ahmad's phone check
+- `/mula` onboarding: 3 slides (scan, family alert, radar), then role (Lindungi saya / Penjaga / Kedua-duanya),
+  name, state and large text. Skippable. Utama sends first-time users there once (`perisai.onboarded`).
+  Role is kept on the phone; a "guardian" sees "Saya jaga" first in Keluarga.
+- `/pasang`: Android one-tap install (saved `beforeinstallprompt`) plus manual steps; iPhone Add to Home Screen
+  steps; "already installed" when running standalone.
+- Tetapan: language, large text (root font 122.5% → 22px body, no horizontal overflow), voice (auto-read on/off),
+  Radar sharing, install link (when not installed), Kongsi PERISAI (QR from `scripts/make-qr.mjs` +
+  share/copy link), privacy points (incl. the honest free-tier note), about (PDRM stat, mission, KPMB, i3EC'26),
+  version (tap 7× → `/eval`).
+- QR files: `public/qr/perisai-qr.svg` (app) and `public/qr/perisai-qr-poster.png` (1600 px, for the poster/video).
+- Radar sets a dark `theme-color` while open. Pulse is a CSS animation; the demo chip sits inside the counter card.
+- Firebase is no longer loaded just to show the profile (`profile.ts` vs `profile-sync.ts`, lazy import).
+- Lighthouse (mobile, live, 15 Oct): Accessibility **100** on Mula, Tetapan, Radar, Keluarga; Best Practices 96;
+  Performance Mula 90, Tetapan 72, Keluarga 65, Radar 65 (was 38; CLS 0.61 → 0.07).
+
 ## Next
-1. P5 Polish: onboarding (Mula), Pasang guide, Tetapan (large text, voice, Kongsi QR, privacy, about,
-   hidden eval tap), dark status bar on Radar, empty/error states, EN pass, Lighthouse.
-2. P6: evaluation mode with real samples (team collects ≥50 scams + ≥20 legit), QR PNG for the poster.
+1. P6: evaluation runner on `/eval` (needs the team's real samples: ≥50 scams + ≥20 legit).
+2. Ahmad: phone check of P5 (onboarding, large text, Tetapan QR, Pasang) and Radar on the OPPO.
 3. iPhone check of push (iOS 16.4+, after Add to Home Screen) through a teammate.
 
 ## P0 phone test result (14 Oct, OPPO A92, Chrome)
@@ -195,7 +210,6 @@ P2 phone test (Android keeps the old share settings until the app is reinstalled
 - Voice depends on the phone's installed voices. If no Malay voice exists, it falls back to Indonesian, then English.
 - `npm audit` shows 5 high warnings in `eslint-config-next`'s dependencies (lint tooling only, not shipped to phones).
   The suggested `--force` fix downgrades Next's ESLint config, so we leave it.
-- The phone's status bar stays light on the Radar tab (theme colour is global). Fine for now; revisit in P5.
 - In `npm run dev`, Next's round "N" dev badge sits over the Utama tab label. It does not appear on Vercel.
 - The app manifest is in BM only (it is read before the app loads).
 - Windows git prints "LF will be replaced by CRLF" warnings. They are harmless.
