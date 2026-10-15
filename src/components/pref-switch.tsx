@@ -26,6 +26,8 @@ export function PrefSwitch({
         type="button"
         role="switch"
         aria-checked={on}
+        aria-label={title}
+        aria-description={hint}
         onClick={() => setPref(pref, !on)}
         className="flex min-h-14 w-full items-center gap-3 text-left"
       >
