@@ -1,6 +1,6 @@
 # PERISAI progress
 
-_Last updated: 15 Oct 2026 (P1 + P2 code done and live; waiting for Ahmad's phone tests)_
+_Last updated: 15 Oct 2026 (P1 + P2 done; P3 code built, waiting for Firestore rules + VAPID keys)_
 
 Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**. The old Flutter P0 is in git tag `flutter-p0`.
 
@@ -8,9 +8,9 @@ Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**
 | Phase | Target | Status |
 |---|---|---|
 | P0 Web setup | 14 Oct | **Done.** Passed on the OPPO A92 (installed as app, standalone, 4 tabs, Radar dark, BM/EN saved). |
-| P1 Imbas | 14–15 Oct | Code done and live (scan → verdict in ~2.3 s on Vercel). Waiting for OPPO test. |
-| P2 Share + paste | 16 Oct | Code done and live (15 Oct). Waiting for OPPO test (reinstall needed). |
-| P3 Keluarga | 16–17 Oct | Not started |
+| P1 Imbas | 14–15 Oct | **Done.** Passed on the OPPO (15 Oct). Verdict in ~2.3 s on Vercel. |
+| P2 Share + paste | 16 Oct | **Done** (15 Oct). WhatsApp text: Copy → Tampal & Imbas. |
+| P3 Keluarga | 16–17 Oct | Code built (15 Oct). Waiting for Firestore rules + VAPID keys, then 2-phone test. |
 | P4 Radar | 18 Oct | Not started |
 | P5 Polish | 19 Oct | Not started |
 | P6 Eval + launch | 20 Oct | Not started |
@@ -103,9 +103,32 @@ Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**
   `gemini-3.5-flash-lite` 1.8 s with the same verdict. Flash-Lite stays first.
 - Tested `/share?text=…` locally (prize scam → SCAM, Hadiah Palsu) and live (`/share` 200, manifest has share_target).
 
+P1 phone test (15 Oct): passed on the OPPO. Voice speaks; red/amber/green verdicts. TIDAK PASTI appears for
+content that isn't a message (by design). P2: WhatsApp has **no Share for text messages** (only Copy/Forward),
+so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still works from apps that offer Share.
+
+### P3 Keluarga code (15 Oct): built, waiting for Ahmad's console steps
+- Packages: `web-push` (+ `@types/web-push`), both in BLUEPRINT.
+- `firestore.rules` (paste into the console). `scripts/setup-vapid.mjs` makes the VAPID keys into `.env.local`.
+- Server: `adminDb()` (Firestore, `preferRest`), `family-server.ts` (profile, 6-digit codes with `create()`
+  retry, join transaction, `notifyGuardians`, `markAlertHandled`), `push-server.ts` (web-push, prunes 404/410).
+- APIs: `/api/pair/create`, `/api/pair/join`, `/api/push/subscribe`, `/api/notify`, `/api/alerts/handled`.
+  `/api/scan` calls `notifyGuardians` for SCAM inside `after()`.
+- Guardianship id is `${protectedUid}_${guardianUid}`, so pairing twice does not duplicate.
+- Push text uses each guardian's own language (`users/{uid}.locale`, synced from Tetapan).
+- Phone: `profile.ts` (localStorage + users/{uid}), `family-client.ts` (live guardians / protecting / alerts,
+  phone numbers in IndexedDB only), `push-client.ts` (status, iPhone-must-install check, subscribe).
+- UI: Keluarga tab (profile, alerts card, Penjaga saya + invite code, Saya jaga + Masukkan Kod + Call,
+  alert history), `/amaran/[id]` (red card, big Call, add phone, Tandakan sudah dihubungi, live),
+  Utama "Dilindungi oleh N penjaga", result screen "Penjaga anda telah dimaklumkan" / Maklumkan Penjaga.
+- `sw.js`: `push` (requireInteraction, vibrate) and `notificationclick` (focus or open `/amaran/{id}`).
+- Next 16 + Cache Components: no `Date.now()` during render; `useParams`/`useSearchParams` inside `<Suspense>`.
+- Local test: profile save returns `permission-denied` until the rules are published (expected).
+
 ## Next
-1. **Ahmad:** P1 + P2 phone tests on the OPPO (list below).
-2. P3 Keluarga (needs 2 phones, VAPID keys, Firestore rules).
+1. **Ahmad:** publish `firestore.rules`, run `node scripts/setup-vapid.mjs`, add the two VAPID vars to Vercel.
+2. Claude: redeploy, then test pairing + alert on two phones with Ahmad.
+3. P4 Radar.
 
 ## P0 phone test result (14 Oct, OPPO A92, Chrome)
 - Chrome menu shows **"Install and create shortcut"** (new name for installing a PWA). Installed fine, opens
