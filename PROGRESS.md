@@ -125,10 +125,14 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
 - Next 16 + Cache Components: no `Date.now()` during render; `useParams`/`useSearchParams` inside `<Suspense>`.
 - Local test: profile save returns `permission-denied` until the rules are published (expected).
 
+- 15 Oct: `firestore.rules` published (typed into the console's editor via the Browser pane; synthetic Ctrl+V
+  can't reach the OS clipboard there). VAPID keys made with the script and added to Vercel as Secret
+  (Production + Preview). Locally verified: profile save, invite code (e.g. 6 digits, 10 min), own-code rejected.
+- The Browser pane's Vercel/GitHub sessions expire; Ahmad signs in again when asked (passwords are his).
+
 ## Next
-1. **Ahmad:** publish `firestore.rules`, run `node scripts/setup-vapid.mjs`, add the two VAPID vars to Vercel.
-2. Claude: redeploy, then test pairing + alert on two phones with Ahmad.
-3. P4 Radar.
+1. **Ahmad + Claude:** two-phone test of pairing and the SCAM alert (steps in the chat of 15 Oct).
+2. P4 Radar.
 
 ## P0 phone test result (14 Oct, OPPO A92, Chrome)
 - Chrome menu shows **"Install and create shortcut"** (new name for installing a PWA). Installed fine, opens
