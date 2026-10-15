@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import type { LucideIcon } from "lucide-react";
 import { SectionCard } from "@/components/section-card";
 import { setPref, usePref, type PrefKey } from "@/lib/prefs";
@@ -19,6 +20,7 @@ export function PrefSwitch({
   hint: string;
 }) {
   const on = usePref(pref);
+  const hintId = useId();
 
   return (
     <SectionCard>
@@ -27,7 +29,7 @@ export function PrefSwitch({
         role="switch"
         aria-checked={on}
         aria-label={title}
-        aria-description={hint}
+        aria-describedby={hintId}
         onClick={() => setPref(pref, !on)}
         className="flex min-h-14 w-full items-center gap-3 text-left"
       >
@@ -36,7 +38,9 @@ export function PrefSwitch({
         </span>
         <span className="min-w-0 flex-1 leading-snug">
           <span className="block text-lg font-bold">{title}</span>
-          <span className="block text-base text-muted-foreground">{hint}</span>
+          <span id={hintId} className="block text-base text-muted-foreground">
+            {hint}
+          </span>
         </span>
         <span
           aria-hidden
