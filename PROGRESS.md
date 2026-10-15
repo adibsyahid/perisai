@@ -213,20 +213,14 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
 - All 4 tabs open, Radar turns dark, English is still selected after closing and reopening the app.
 
 ## What Ahmad must do now
-P1 phone test on the OPPO (open the installed PERISAI app; it updates itself from Vercel):
-1. Utama shows **Imbas Sekarang**, **Tampal & Imbas**, 4 tiles and "Imbasan terkini".
-2. Imbas Sekarang → paste a parcel scam → red **SCAM** screen within ~5 s, highlighted flags, voice reads it.
-3. Copy a real bank/courier SMS → **Tampal & Imbas** → SELAMAT or MENCURIGAKAN (not SCAM).
-4. **Pilih screenshot** → a scam screenshot → verdict.
-5. Back on Utama the scans appear under "Imbasan terkini"; tapping one reopens it.
-6. Tetapan → English → scan again: the result is in English.
-
-P2 phone test (Android keeps the old share settings until the app is reinstalled):
-1. Long-press the PERISAI icon → Uninstall/Remove, then reinstall from Chrome (⋮ → Install and create shortcut).
-2. In WhatsApp, long-press a message → Share (↗) → **PERISAI**. The verdict should appear within ~5 s.
-3. Back from the result goes to Utama.
-- Optional: in Vercel, mark `FIREBASE_PRIVATE_KEY` and `GEMINI_API_KEY` as **Sensitive** (⋯ → Edit).
-- Optional: turn on 2FA for Vercel and GitHub before submission.
+1. On the OPPO (close PERISAI fully and reopen so the new version loads):
+   - Onboarding appears once: go through it, try "Teks besar", then finish.
+   - Tetapan: QR code, voice switch, Radar switch, "Versi 1.0" tapped 7 times opens Mod Penilaian.
+   - Radar tab: map, counter, chart, feed; the phone status bar turns dark.
+2. With the team: collect the real evaluation samples (see "How the team adds real samples").
+3. A teammate with an iPhone: Add to Home Screen, then test Tampal & Imbas and family alerts.
+- Optional: mark `FIREBASE_PRIVATE_KEY`, `GEMINI_API_KEY` and `VAPID_PRIVATE_KEY` as Sensitive in Vercel;
+  turn on 2FA for Vercel and GitHub before submission.
 
 ## Known issues / notes
 - Rate limiting is in memory, per server instance (fine for the prototype, not for production).
