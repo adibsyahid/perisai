@@ -22,7 +22,6 @@ import { SectionCard } from "@/components/section-card";
 import { Button } from "@/components/ui/button";
 import { LOCALES, useI18n } from "@/lib/i18n";
 import { APP_VERSION, useInstalled } from "@/lib/install";
-import { syncLocale } from "@/lib/profile";
 import { cn } from "@/lib/utils";
 
 const APP_URL = "https://perisai-three.vercel.app";
@@ -91,7 +90,7 @@ function LanguageCard() {
               onClick={() => {
                 setLocale(code);
                 // Family alerts are written in the guardian's language, so tell the server too.
-                syncLocale(code).catch(() => {});
+                import("@/lib/profile-sync").then((m) => m.syncLocale(code)).catch(() => {});
               }}
               className={cn(
                 "flex min-h-16 items-center justify-between gap-3 rounded-xl border-2 px-4 text-left text-lg font-semibold transition-colors",

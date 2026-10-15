@@ -48,16 +48,9 @@ export default function RadarPage() {
         </span>
       </div>
 
-      {hasDemo && (
-        <p className="inline-flex w-fit items-center gap-1.5 rounded-full border border-[#FBBF24]/40 bg-[#FBBF24]/10 px-3 py-1 text-sm font-semibold text-[#FDE68A]">
-          <FlaskConical aria-hidden className="size-4" />
-          {t.radar.demoChip}
-        </p>
-      )}
-
       {/* National counter. The number pops each time it goes up. */}
       <section className={cn(card, "flex items-end justify-between gap-3")}>
-        <div>
+        <div className="min-w-0">
           <p className="text-base text-white/75">{t.radar.counter}</p>
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.p
@@ -71,6 +64,15 @@ export default function RadarPage() {
               {reports === null ? "–" : list.length.toLocaleString(locale === "ms" ? "ms-MY" : "en-MY")}
             </motion.p>
           </AnimatePresence>
+          {/* The line is always there, so the chip appearing never pushes the page down. */}
+          <p className="mt-1 flex h-7 items-center">
+            {hasDemo && (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#FBBF24]/40 bg-[#FBBF24]/10 px-3 py-0.5 text-sm font-semibold text-[#FDE68A]">
+                <FlaskConical aria-hidden className="size-4" />
+                {t.radar.demoChip}
+              </span>
+            )}
+          </p>
         </div>
         <ShieldAlert aria-hidden className="size-10 text-[#F87171]" />
       </section>

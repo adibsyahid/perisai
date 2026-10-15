@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n";
 import { isInstalled } from "@/lib/install";
 import { finishOnboarding, setRole, type Role } from "@/lib/onboarding";
-import { saveProfile, useProfile } from "@/lib/profile";
+import { useProfile } from "@/lib/profile";
 import { STATES } from "@/lib/states";
 import { cn } from "@/lib/utils";
 
@@ -37,7 +37,9 @@ export default function OnboardingPage() {
     setRole(role);
     if (name.trim()) {
       // A failed save (e.g. offline) must not trap the user here; Keluarga can retry.
-      await saveProfile({ name: name.trim().slice(0, 30), state }, locale).catch(() => {});
+      await import("@/lib/profile-sync")
+        .then((m) => m.saveProfile({ name: name.trim().slice(0, 30), state }, locale))
+        .catch(() => {});
     }
     finishOnboarding();
     router.replace(isInstalled() ? "/" : "/pasang");

@@ -5,7 +5,8 @@ import { MapPin, Pencil, UserRound } from "lucide-react";
 import { fieldClass, SectionCard } from "@/components/section-card";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n";
-import { saveProfile, type LocalProfile } from "@/lib/profile";
+import type { LocalProfile } from "@/lib/profile";
+import { saveProfile } from "@/lib/profile-sync";
 import { STATES, stateName } from "@/lib/states";
 
 // Name + state. Needed before pairing, because the other person sees this name.

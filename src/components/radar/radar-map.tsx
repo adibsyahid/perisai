@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "motion/react";
 import { useI18n } from "@/lib/i18n";
 import { MAP_HEIGHT, MAP_STATES, MAP_WIDTH } from "@/lib/radar-map";
 import { stateName } from "@/lib/states";
@@ -56,20 +55,19 @@ export function RadarMap({
           );
         })}
 
-      {/* The newest report pulses; a new id restarts the animation. */}
+      {/* The newest report pulses (CSS .radar-pulse); a new id restarts the animation. */}
       {latestState &&
         MAP_STATES.filter((s) => s.id === latestState).map((state) => (
-          <motion.circle
+          <circle
             key={latestId}
             aria-hidden
+            className="radar-pulse"
             cx={state.cx}
             cy={state.cy}
+            r={34}
             fill="none"
             stroke="#FCA5A5"
             strokeWidth={1.5}
-            initial={{ r: 4, opacity: 0.9 }}
-            animate={{ r: 34, opacity: 0 }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
           />
         ))}
     </svg>

@@ -103,6 +103,24 @@
   }
 }
 
+/* Radar: the newest report's ring. A CSS animation runs on the GPU, unlike an
+   endlessly repeating JavaScript animation, so the Radar stays smooth on cheap phones. */
+@keyframes radar-pulse {
+  from {
+    transform: scale(0.12);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+.radar-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: radar-pulse 1.8s ease-out infinite;
+}
+
 /* Honour reduced motion everywhere, including Motion's JS animations
    (they read the same media query through useReducedMotion). */
 @media (prefers-reduced-motion: reduce) {
