@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ClipboardPaste, Hash, ImageUp, Info, Link2, MessageSquareText, ScanLine } from "lucide-react";
 import { ProtectionStatus } from "@/components/family/protection-status";
@@ -10,6 +10,7 @@ import { ScanInputSheet, type TextMode } from "@/components/scan/scan-input-shee
 import { ShieldMark } from "@/components/shield-mark";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n";
+import { isOnboarded } from "@/lib/onboarding";
 import type { ScanInput } from "@/lib/scan-client";
 import { setPendingScan } from "@/lib/scan-session";
 
@@ -20,6 +21,11 @@ export default function HomePage() {
   const [sheet, setSheet] = useState<TextMode | null>(null);
   const [sheetKey, setSheetKey] = useState(0);
   const [notice, setNotice] = useState("");
+
+  // First launch: show the short Mula onboarding once.
+  useEffect(() => {
+    if (!isOnboarded()) router.replace("/mula");
+  }, [router]);
 
   function startScan(input: ScanInput) {
     setPendingScan({ type: "new", input });

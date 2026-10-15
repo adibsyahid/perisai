@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { I18nProvider } from "@/lib/i18n";
+import { PrefEffects } from "@/components/pref-effects";
 import { SwRegister } from "@/components/sw-register";
 import "./globals.css";
 
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             {children}
           </div>
           <SwRegister />
+          <PrefEffects />
         </I18nProvider>
       </body>
     </html>

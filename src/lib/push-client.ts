@@ -2,13 +2,9 @@
 
 // Turns on family alerts for this phone (BLUEPRINT F3, push setup).
 import { postApi } from "./firebase-client";
+import { isInstalled, isIos } from "./install";
 
 export type PushStatus = "unsupported" | "ios-install" | "blocked" | "off" | "on";
-
-const isIos = () => /iPad|iPhone|iPod/.test(navigator.userAgent);
-const isInstalled = () =>
-  window.matchMedia("(display-mode: standalone)").matches ||
-  (navigator as Navigator & { standalone?: boolean }).standalone === true;
 
 export async function pushStatus(): Promise<PushStatus> {
   // iPhone only allows web push for apps added to the Home Screen (iOS 16.4+).

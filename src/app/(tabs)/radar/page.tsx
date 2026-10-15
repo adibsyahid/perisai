@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { FlaskConical, Lock, ShieldAlert, TriangleAlert } from "lucide-react";
 import { PageHeader, PageShell } from "@/components/page-shell";
@@ -17,6 +18,16 @@ const FEED_SIZE = 10;
 export default function RadarPage() {
   const { t, locale } = useI18n();
   const { reports, now } = useRadar();
+
+  // Dark phone status bar while Radar is on screen; restored when leaving.
+  useEffect(() => {
+    const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+    const previous = meta?.content;
+    meta?.setAttribute("content", "#07122B");
+    return () => {
+      if (meta && previous) meta.setAttribute("content", previous);
+    };
+  }, []);
   const list = reports ?? [];
   const latest = list[0];
   const counts = countByState(list);

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useFamily } from "@/lib/family-client";
 import { postApi } from "@/lib/firebase-client";
 import { useI18n } from "@/lib/i18n";
+import { usePref } from "@/lib/prefs";
 import type { ScanResult } from "@/lib/scan-types";
 import { canSpeak, speak, stopSpeaking } from "@/lib/speech";
 import { cn } from "@/lib/utils";
@@ -112,15 +113,17 @@ export function ResultView({
     result.verdict !== "SELAMAT" &&
     (result.extracted.phones.length > 0 || result.extracted.bankAccounts.length > 0);
 
-  // On a fresh result: buzz for SCAM and read the verdict aloud (elderly users).
+  // On a fresh result: buzz for SCAM and, unless turned off in Tetapan, read the
+  // verdict aloud (elderly users). The Dengar button always works.
+  const autoVoice = usePref("voice");
   useEffect(() => {
     if (!fresh) return;
     if (result.verdict === "SCAM") navigator.vibrate?.([250, 120, 250]);
-    if (canSpeak()) {
+    if (autoVoice && canSpeak()) {
       speak(spokenText(result, verdictWord), locale, () => setSpeaking(false));
     }
     return stopSpeaking;
-  }, [fresh, result, verdictWord, locale]);
+  }, [fresh, result, verdictWord, locale, autoVoice]);
 
   function toggleVoice() {
     if (speaking) {

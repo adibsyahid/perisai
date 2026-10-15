@@ -91,6 +91,11 @@
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
   }
+  /* Large-text mode (Tetapan): 16px → 19.6px root, so the 18px body becomes ~22px
+     (BLUEPRINT section 4) and every rem-based size scales with it. */
+  html[data-large-text] {
+    font-size: 122.5%;
+  }
   body {
     @apply bg-background text-foreground antialiased;
     font-size: var(--text-body);
