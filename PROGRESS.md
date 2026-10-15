@@ -1,6 +1,6 @@
 # PERISAI progress
 
-_Last updated: 14 Oct 2026, evening (P1 Imbas code done and live; waiting for Ahmad's phone test)_
+_Last updated: 15 Oct 2026 (P1 + P2 code done and live; waiting for Ahmad's phone tests)_
 
 Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**. The old Flutter P0 is in git tag `flutter-p0`.
 
@@ -9,7 +9,7 @@ Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**
 |---|---|---|
 | P0 Web setup | 14 Oct | **Done.** Passed on the OPPO A92 (installed as app, standalone, 4 tabs, Radar dark, BM/EN saved). |
 | P1 Imbas | 14–15 Oct | Code done and live (scan → verdict in ~2.3 s on Vercel). Waiting for OPPO test. |
-| P2 Share + paste | 16 Oct | Not started |
+| P2 Share + paste | 16 Oct | Code done and live (15 Oct). Waiting for OPPO test (reinstall needed). |
 | P3 Keluarga | 16–17 Oct | Not started |
 | P4 Radar | 18 Oct | Not started |
 | P5 Polish | 19 Oct | Not started |
@@ -93,10 +93,19 @@ Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**
 - Tested: localhost (parcel → SCAM 95, bank notice → SELAMAT 0, STR aid → SCAM) and live Vercel
   ("Hi mak, nombor baru" → SCAM, Menyamar Keluarga, 2.3 s).
 
+### P2 Share + paste (15 Oct)
+- Manifest `share_target` (GET `/share` with title/text/url). `/share` joins text + url (title only when
+  nothing else came, because it is usually just an app name), drops duplicates, and hands over to `/imbas`
+  with `router.replace`, so Back returns to Utama.
+- The iPhone flow is **Tampal & Imbas** on Utama (already built in P1).
+- Gemini Malay hint now names examples ("mesej" not "pesan", "wang" not "uang").
+- Re-tested models on 15 Oct: `gemini-3.8-flash` and `3.7-flash` now answer but take ~7 s;
+  `gemini-3.5-flash-lite` 1.8 s with the same verdict. Flash-Lite stays first.
+- Tested `/share?text=…` locally (prize scam → SCAM, Hadiah Palsu) and live (`/share` 200, manifest has share_target).
+
 ## Next
-1. **Ahmad:** P1 phone test on the OPPO (list below).
-2. P2 Share + paste: `share_target` in the manifest and a `/share` page that starts the scan.
-3. P3 Keluarga (needs 2 phones, VAPID keys, Firestore rules).
+1. **Ahmad:** P1 + P2 phone tests on the OPPO (list below).
+2. P3 Keluarga (needs 2 phones, VAPID keys, Firestore rules).
 
 ## P0 phone test result (14 Oct, OPPO A92, Chrome)
 - Chrome menu shows **"Install and create shortcut"** (new name for installing a PWA). Installed fine, opens
@@ -111,6 +120,11 @@ P1 phone test on the OPPO (open the installed PERISAI app; it updates itself fro
 4. **Pilih screenshot** → a scam screenshot → verdict.
 5. Back on Utama the scans appear under "Imbasan terkini"; tapping one reopens it.
 6. Tetapan → English → scan again: the result is in English.
+
+P2 phone test (Android keeps the old share settings until the app is reinstalled):
+1. Long-press the PERISAI icon → Uninstall/Remove, then reinstall from Chrome (⋮ → Install and create shortcut).
+2. In WhatsApp, long-press a message → Share (↗) → **PERISAI**. The verdict should appear within ~5 s.
+3. Back from the result goes to Utama.
 - Optional: in Vercel, mark `FIREBASE_PRIVATE_KEY` and `GEMINI_API_KEY` as **Sensitive** (⋯ → Edit).
 - Optional: turn on 2FA for Vercel and GitHub before submission.
 
