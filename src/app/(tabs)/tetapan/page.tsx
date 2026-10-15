@@ -3,6 +3,7 @@
 import { Check, Languages } from "lucide-react";
 import { PageHeader, PageShell } from "@/components/page-shell";
 import { LOCALES, useI18n } from "@/lib/i18n";
+import { syncLocale } from "@/lib/profile";
 import { cn } from "@/lib/utils";
 
 // Tetapan (settings). P0 has the language switch; more settings come later.
@@ -37,7 +38,11 @@ export default function SettingsPage() {
                 aria-checked={selected}
                 // Each option is labelled in its own language, so anyone can find theirs.
                 lang={code}
-                onClick={() => setLocale(code)}
+                onClick={() => {
+                  setLocale(code);
+                  // Family alerts are written in the guardian's language, so tell the server too.
+                  syncLocale(code).catch(() => {});
+                }}
                 className={cn(
                   "flex min-h-16 items-center justify-between gap-3 rounded-xl border-2 px-4 text-left text-lg font-semibold transition-colors",
                   "focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ring",

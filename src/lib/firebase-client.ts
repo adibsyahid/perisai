@@ -1,5 +1,6 @@
 import { getApps, initializeApp } from "firebase/app";
 import { getAuth, signInAnonymously } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 // The web config is public by design (it is sent to every browser);
 // Firestore Security Rules and server-side token checks protect the data.
@@ -13,16 +14,32 @@ const config = {
 };
 
 // Created lazily, only in the browser, so server rendering never touches Firebase.
-function clientAuth() {
-  const app = getApps()[0] ?? initializeApp(config);
-  return getAuth(app);
+function clientApp() {
+  return getApps()[0] ?? initializeApp(config);
 }
 
-// No passwords: every phone gets an anonymous account the first time it scans.
+export function clientDb() {
+  return getFirestore(clientApp());
+}
+
+// No passwords: every phone gets an anonymous account the first time it needs one.
 // The same account is restored on later visits (Firebase keeps it in IndexedDB).
-export async function getIdToken(): Promise<string> {
-  const auth = clientAuth();
+export async function ensureUser() {
+  const auth = getAuth(clientApp());
   await auth.authStateReady();
-  const user = auth.currentUser ?? (await signInAnonymously(auth)).user;
-  return user.getIdToken();
+  return auth.currentUser ?? (await signInAnonymously(auth)).user;
+}
+
+export async function getIdToken(): Promise<string> {
+  return (await ensureUser()).getIdToken();
+}
+
+// POST to one of our API routes as the signed-in user.
+export async function postApi<T>(path: string, body: unknown): Promise<{ ok: boolean; data: T }> {
+  const response = await fetch(path, {
+    method: "POST",
+    headers: { "content-type": "application/json", authorization: `Bearer ${await getIdToken()}` },
+    body: JSON.stringify(body),
+  });
+  return { ok: response.ok, data: (await response.json().catch(() => ({}))) as T };
 }

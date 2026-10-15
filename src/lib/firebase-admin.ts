@@ -1,6 +1,7 @@
 // Server only: never import this from a "use client" file.
 import { cert, getApps, initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
+import { getFirestore, type Firestore } from "firebase-admin/firestore";
 
 function adminApp() {
   const existing = getApps()[0];
@@ -19,6 +20,18 @@ function adminApp() {
       privateKey,
     }),
   });
+}
+
+let db: Firestore | undefined;
+
+// Firestore with full access (Admin SDK). preferRest uses plain HTTPS instead of gRPC,
+// which starts faster on serverless functions.
+export function adminDb(): Firestore {
+  if (!db) {
+    db = getFirestore(adminApp());
+    db.settings({ preferRest: true });
+  }
+  return db;
 }
 
 // Returns the caller's uid, or null when the token is missing or invalid.

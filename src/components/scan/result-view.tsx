@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { CircleCheck, ExternalLink, Flag, Home, Phone, ScanLine, Volume2, VolumeX, X } from "lucide-react";
+import { BellRing, CircleCheck, ExternalLink, Flag, Home, Phone, ScanLine, Volume2, VolumeX, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useFamily } from "@/lib/family-client";
+import { postApi } from "@/lib/firebase-client";
 import { useI18n } from "@/lib/i18n";
 import type { ScanResult } from "@/lib/scan-types";
 import { canSpeak, speak, stopSpeaking } from "@/lib/speech";
@@ -36,6 +38,49 @@ function ScoreRing({ score, color, label }: { score: number; color: string; labe
         <span className="text-xs font-semibold opacity-85">{label}</span>
       </span>
     </div>
+  );
+}
+
+// Family link on the result: SCAM alerts guardians automatically (server side);
+// for MENCURIGAKAN the user can choose to tell them.
+function GuardianNotice({ result }: { result: ScanResult }) {
+  const { t } = useI18n();
+  const { ready, guardians } = useFamily();
+  const [sent, setSent] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  if (!ready || guardians.length === 0) return null;
+
+  if (result.verdict === "SCAM" || sent) {
+    return (
+      <p role="status" className="flex items-start gap-2 rounded-2xl bg-safe/10 p-4 text-base font-semibold text-[#15803D]">
+        <BellRing aria-hidden className="mt-0.5 size-5 shrink-0" />
+        {result.verdict === "SCAM" ? t.family.guardiansAlerted : t.family.notified}
+      </p>
+    );
+  }
+
+  return (
+    <Button
+      size="lg"
+      variant="outline"
+      disabled={busy}
+      className="w-full border-2"
+      onClick={async () => {
+        setBusy(true);
+        const { ok } = await postApi("/api/notify", {
+          verdict: result.verdict,
+          scamType: result.scamType,
+          headline: result.headline,
+          riskScore: result.riskScore,
+        }).catch(() => ({ ok: false }));
+        setSent(ok);
+        setBusy(false);
+      }}
+    >
+      <BellRing />
+      {t.family.notifyGuardians}
+    </Button>
   );
 }
 
@@ -175,6 +220,8 @@ export function ResultView({
             ))}
           </ul>
         </section>
+
+        {risky && <GuardianNotice result={result} />}
 
         {risky && (
           <section className="space-y-3 rounded-2xl bg-navy p-5 text-white">

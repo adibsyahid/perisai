@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ClipboardPaste, Hash, ImageUp, Info, Link2, MessageSquareText, ScanLine } from "lucide-react";
+import { ProtectionStatus } from "@/components/family/protection-status";
 import { PageShell } from "@/components/page-shell";
 import { RecentScans } from "@/components/scan/recent-scans";
 import { ScanInputSheet, type TextMode } from "@/components/scan/scan-input-sheet";
@@ -90,6 +91,8 @@ export default function HomePage() {
           {t.home.scanNow}
         </Button>
       </section>
+
+      <ProtectionStatus />
 
       <div className="flex flex-col gap-2">
         <Button size="lg" variant="outline" onClick={pasteAndScan} className="w-full border-2 border-primary/30 bg-card text-primary">

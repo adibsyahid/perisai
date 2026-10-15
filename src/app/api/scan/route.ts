@@ -1,4 +1,6 @@
+import { after } from "next/server";
 import { verifyRequest } from "@/lib/firebase-admin";
+import { notifyGuardians } from "@/lib/family-server";
 import { askGemini } from "@/lib/gemini";
 import { checkLinks } from "@/lib/heuristics";
 import { bm } from "@/lib/i18n/bm";
@@ -85,6 +87,18 @@ export async function POST(request: Request) {
     ].slice(0, 6),
     extracted: { ...ai.extracted, urls: [...new Set([...ai.extracted.urls, ...links.urls])] },
   };
+
+  // SCAM: alert the family (BLUEPRINT F3). after() runs once the answer is sent,
+  // so the person waiting for the verdict is never slowed down.
+  if (result.verdict === "SCAM") {
+    after(async () => {
+      try {
+        await notifyGuardians(uid, result);
+      } catch (error) {
+        console.error("scan: guardian alert failed", (error as Error).name);
+      }
+    });
+  }
 
   return Response.json(result);
 }
