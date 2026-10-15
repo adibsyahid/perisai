@@ -1,6 +1,6 @@
 # PERISAI progress
 
-_Last updated: 15 Oct 2026 (P0–P3 done and live; P4 Radar next)_
+_Last updated: 15 Oct 2026 (P0–P4 done and live; P5 Polish next)_
 
 Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**. The old Flutter P0 is in git tag `flutter-p0`.
 
@@ -11,7 +11,7 @@ Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**
 | P1 Imbas | 14–15 Oct | **Done.** Passed on the OPPO (15 Oct). Verdict in ~2.3 s on Vercel. |
 | P2 Share + paste | 16 Oct | **Done** (15 Oct). WhatsApp text: Copy → Tampal & Imbas. |
 | P3 Keluarga | 16–17 Oct | **Done** (15 Oct). Pairing + SCAM push alert passed (laptop "Mak" + OPPO "Anak"). |
-| P4 Radar | 18 Oct | Not started |
+| P4 Radar | 18 Oct | **Done** (15 Oct). Live map, counter, chart, feed; demo data via /eval. |
 | P5 Polish | 19 Oct | Not started |
 | P6 Eval + launch | 20 Oct | Not started |
 | Video + poster | 20–22 Oct | Submit by 22 Oct (hard deadline 23 Oct) |
@@ -142,9 +142,30 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
 - Test data in Firestore: users Mak + Adib, guardianship `Mak <- Adib`, 1 alert. Keep for the demo or delete later.
 - Tip: one phone is enough for the family demo/test. Use the laptop browser as the second person.
 
+### P4 Radar (15 Oct): done and live
+- Map data: official state boundaries from data.gov.my (DOSM) open-source frontend, MIT licence
+  (`datagovmy-front/packages/datagovmy-ui/src/lib/geojson/state/_mobile.ts`, 603 KB, phone layout with
+  Sabah/Sarawak placed near the peninsula). `scripts/make-radar-map.mjs` parses it as data (no eval),
+  projects with `d3-geo` (devDependency only), simplifies and writes `src/lib/radar-map.ts` (33 KB SVG paths +
+  centroids for all 16 states). Credit shown on the Radar screen.
+- Recharts was not needed: the top-5 chart is plain CSS bars (lighter, easier to explain).
+- Server: `radar-server.ts` `addReport()` (scamType, verdict, state from the profile, createdAt, isDemo; no uid),
+  called from `/api/scan` in `after()` for SCAM/MENCURIGAKAN unless the user turned sharing off.
+  `fillDemoReports()` (150 weighted reports over 7 days, isDemo) and `clearDemoReports()`; `/api/demo-data`.
+- Phone: `radar-client.ts` (`useRadar` live 7-day listener, `countByState`, `topTypes`), `RadarMap` (glowing
+  dots sized by sqrt(count), newest state pulses), Radar page (live pill, demo chip, counter that pops,
+  map, top-5 bars, feed of 10 with "x min lalu", anonymity note, map credit).
+- `prefs.ts` (radar / voice / largeText switches in localStorage) and `PrefSwitch`; Tetapan has
+  "Kongsi ke Radar Scam". `/eval` page (hidden) with Isi / Padam data demo.
+- Tested live: 150 demo reports → counter 150 + map + chart; a new scan from "Mak" (Pahang) moved the counter
+  to 151 and put "Kerja Part-Time Palsu dikesan di Pahang · sekarang" on top, without a reload.
+- Firestore now holds 150 demo reports (isDemo). Clear them from `/eval` → Padam data demo when not needed.
+
 ## Next
-1. P4 Radar (needs the Malaysia states GeoJSON, `d3-geo`, `recharts`).
-2. iPhone check of push (iOS 16.4+, after Add to Home Screen) through a teammate.
+1. P5 Polish: onboarding (Mula), Pasang guide, Tetapan (large text, voice, Kongsi QR, privacy, about,
+   hidden eval tap), dark status bar on Radar, empty/error states, EN pass, Lighthouse.
+2. P6: evaluation mode with real samples (team collects ≥50 scams + ≥20 legit), QR PNG for the poster.
+3. iPhone check of push (iOS 16.4+, after Add to Home Screen) through a teammate.
 
 ## P0 phone test result (14 Oct, OPPO A92, Chrome)
 - Chrome menu shows **"Install and create shortcut"** (new name for installing a PWA). Installed fine, opens
