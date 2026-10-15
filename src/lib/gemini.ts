@@ -24,7 +24,7 @@ Never ask the user for personal information.`;
 // Flash-Lite sometimes drifts into Indonesian words ("pesan", "iming-iming"),
 // so the Malay option names the Malaysian standard explicitly.
 const LANGUAGE_NAMES = {
-  ms: "Bahasa Melayu as used in Malaysia (Malaysian spelling and words, never Indonesian)",
+  ms: "Bahasa Melayu as used in Malaysia (Malaysian words only, never Indonesian: say 'mesej' not 'pesan', 'wang' not 'uang')",
   en: "English",
 } as const;
 

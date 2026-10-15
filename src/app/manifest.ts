@@ -16,6 +16,13 @@ export default function manifest(): MetadataRoute.Manifest {
     background_color: "#F6F7FB",
     theme_color: "#F6F7FB",
     categories: ["security", "utilities"],
+    // Puts PERISAI in Android's Share menu (WhatsApp → long-press → Share → PERISAI).
+    // GET keeps it simple: the text arrives as URL parameters on /share.
+    share_target: {
+      action: "/share",
+      method: "GET",
+      params: { title: "title", text: "text", url: "url" },
+    },
     icons: [
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
       { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
