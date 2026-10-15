@@ -54,7 +54,8 @@ export function ProfileCard({ profile }: { profile: LocalProfile | null }) {
           try {
             await saveProfile({ name: name.trim().slice(0, 30), state }, locale);
             setEditing(false);
-          } catch {
+          } catch (error) {
+            console.error("profile: save failed", (error as { code?: string }).code ?? error);
             setFailed(true);
           } finally {
             setSaving(false);
