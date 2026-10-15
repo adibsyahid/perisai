@@ -1,6 +1,6 @@
 # PERISAI progress
 
-_Last updated: 15 Oct 2026 (P0–P5 done and live; P6 evaluation started)_
+_Last updated: 15 Oct 2026 (P0–P6 code done and live; waiting for real eval samples and phone checks)_
 
 Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**. The old Flutter P0 is in git tag `flutter-p0`.
 
@@ -13,7 +13,7 @@ Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**
 | P3 Keluarga | 16–17 Oct | **Done** (15 Oct). Pairing + SCAM push alert passed (laptop "Mak" + OPPO "Anak"). |
 | P4 Radar | 18 Oct | **Done** (15 Oct). Live map, counter, chart, feed; demo data via /eval. |
 | P5 Polish | 19 Oct | Done in code (15 Oct). Lighthouse a11y 100. Waiting for OPPO check. |
-| P6 Eval + launch | 20 Oct | Not started |
+| P6 Eval + launch | 20 Oct | Code done (15 Oct). Waiting for the team's real samples. |
 | Video + poster | 20–22 Oct | Submit by 22 Oct (hard deadline 23 Oct) |
 
 ## Done
@@ -177,17 +177,35 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
 - Lighthouse (mobile, live, 15 Oct): Accessibility **100** on Mula, Tetapan, Radar, Keluarga; Best Practices 96;
   Performance Mula 90, Tetapan 72, Keluarga 65, Radar 65 (was 38; CLS 0.61 → 0.07).
 
-### P6 Evaluation (started 15 Oct)
+### P6 Evaluation (15 Oct): done in code, waiting for the team's real samples
 - `/api/scan` accepts `evaluation: true`: no family alert, no Radar report, own rate limit (100 per 10 min).
-- QR PNG for the poster is ready: `public/qr/perisai-qr-poster.png`.
+  Verified: a 12-sample run created no alerts and no Radar dots.
+- `src/lib/evaluation.ts`: sample/result types, `computeMetrics` (flagged = SCAM or MENCURIGAKAN; accuracy,
+  precision, recall, false-alarm rate, average time, strict SCAM count, per-type table), `toCsv`, saved results.
+- `/eval` → "Ketepatan AI": paced runner (one sample every 4 s), Stop / Sambung (retries failures), progress bar,
+  headline sentence for the poster, metric tiles, per-type table, Eksport CSV, Set semula. Warns when the
+  samples are still examples (`contoh-` ids) or fewer than 50 scams / 20 legit.
+- `public/eval/samples.json` holds **12 example samples written by Claude** (8 scam, 4 legit). Live run on 15 Oct:
+  8/8 caught, 0 false alarms, 8/8 right type, 2.4 s average. **Not evidence**: the team must replace them.
+- QR PNG for the poster: `public/qr/perisai-qr-poster.png`.
+
+## How the team adds real samples (for the judges' numbers)
+1. Collect ≥50 real scam messages and ≥20 real legitimate ones (bank, courier, government, family).
+   Blur or replace names, IC, phone and account numbers of real people.
+2. Edit `public/eval/samples.json`. One entry each:
+   `{ "id": "s01", "label": "scam", "scamType": "parcel", "text": "..." }` or for a screenshot
+   `{ "id": "s02", "label": "scam", "scamType": "phishing", "image": "/eval/images/s02.jpg" }`
+   (put the picture in `public/eval/images/`). Legit entries use `"label": "legit"` and no scamType.
+   scamType values: parcel, authority_impersonation, job, investment, loan, phishing, malicious_apk,
+   impersonation, romance, online_purchase, prize, govt_aid, other.
+3. Remove the `contoh-` entries, commit and push. Then Tetapan → tap "Versi 1.0" 7 times → Set semula →
+   Mula penilaian. 70 samples take about 5 minutes. Eksport CSV for the report.
 
 ## Next
-1. P6: build the runner UI on `/eval`: `public/eval/samples.json` ({id, label scam|legit, scamType, text or image}),
-   paced runs (~1 every 4 s, resumable via localStorage, `runScan(..., { evaluation: true })`), metrics
-   (accuracy, precision, recall, false-alarm rate, avg time; flagged = SCAM or MENCURIGAKAN), per-type table,
-   CSV export. **Team:** collect ≥50 real scams + ≥20 real legit messages (personal details blurred).
-2. Ahmad: phone check of P5 (onboarding, large text, Tetapan QR, Pasang) and Radar on the OPPO.
+1. **Team:** real samples (above), then run the evaluation and put the headline sentence on the poster/video.
+2. **Ahmad:** phone check of P5 (onboarding, large text, Tetapan QR, Pasang) and Radar on the OPPO.
 3. iPhone check of push (iOS 16.4+, after Add to Home Screen) through a teammate.
+4. Before the video: decide whether to keep the 150 demo Radar reports (Radar shows "Termasuk data demo").
 
 ## P0 phone test result (14 Oct, OPPO A92, Chrome)
 - Chrome menu shows **"Install and create shortcut"** (new name for installing a PWA). Installed fine, opens
