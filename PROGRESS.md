@@ -1,6 +1,6 @@
 # PERISAI progress
 
-_Last updated: 15 Oct 2026 (P1 + P2 done; P3 code built, waiting for Firestore rules + VAPID keys)_
+_Last updated: 15 Oct 2026 (P0–P3 done and live; P4 Radar next)_
 
 Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**. The old Flutter P0 is in git tag `flutter-p0`.
 
@@ -10,7 +10,7 @@ Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**
 | P0 Web setup | 14 Oct | **Done.** Passed on the OPPO A92 (installed as app, standalone, 4 tabs, Radar dark, BM/EN saved). |
 | P1 Imbas | 14–15 Oct | **Done.** Passed on the OPPO (15 Oct). Verdict in ~2.3 s on Vercel. |
 | P2 Share + paste | 16 Oct | **Done** (15 Oct). WhatsApp text: Copy → Tampal & Imbas. |
-| P3 Keluarga | 16–17 Oct | Code built (15 Oct). Waiting for Firestore rules + VAPID keys, then 2-phone test. |
+| P3 Keluarga | 16–17 Oct | **Done** (15 Oct). Pairing + SCAM push alert passed (laptop "Mak" + OPPO "Anak"). |
 | P4 Radar | 18 Oct | Not started |
 | P5 Polish | 19 Oct | Not started |
 | P6 Eval + launch | 20 Oct | Not started |
@@ -130,9 +130,21 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
   (Production + Preview). Locally verified: profile save, invite code (e.g. 6 digits, 10 min), own-code rejected.
 - The Browser pane's Vercel/GitHub sessions expire; Ahmad signs in again when asked (passwords are his).
 
+- Live fixes on 15 Oct:
+  - Pairing codes only retry on ALREADY_EXISTS (it used to hide every Firestore error).
+  - `experimental.turbopackMinify: { server: false, client: true }` in `next.config.ts`. Firestore's REST
+    serializer checks `constructor.name === "Long"`; server minification renamed the class, so every Admin
+    write with a big number failed on Vercel ("toProto3JSON: don't know how to convert value").
+- **P3 end-to-end test passed (15 Oct)**: "Mak" in the Browser pane (live site), "Adib" on the OPPO.
+  Pairing worked, Mak's Utama shows "Dilindungi oleh 1 penjaga", a SCAM scan showed "Penjaga anda telah
+  dimaklumkan", the OPPO got the push notification and the Amaran screen with Call Mak.
+  A direct test push returned 201 from FCM and appeared on the phone.
+- Test data in Firestore: users Mak + Adib, guardianship `Mak <- Adib`, 1 alert. Keep for the demo or delete later.
+- Tip: one phone is enough for the family demo/test. Use the laptop browser as the second person.
+
 ## Next
-1. **Ahmad + Claude:** two-phone test of pairing and the SCAM alert (steps in the chat of 15 Oct).
-2. P4 Radar.
+1. P4 Radar (needs the Malaysia states GeoJSON, `d3-geo`, `recharts`).
+2. iPhone check of push (iOS 16.4+, after Add to Home Screen) through a teammate.
 
 ## P0 phone test result (14 Oct, OPPO A92, Chrome)
 - Chrome menu shows **"Install and create shortcut"** (new name for installing a PWA). Installed fine, opens

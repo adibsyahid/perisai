@@ -39,7 +39,8 @@ export function GuardiansCard({ guardians, hasProfile }: { guardians: Guardiansh
     }
   }
 
-  const minutesLeft = code ? Math.ceil((code.expiresAt - now) / 60_000) : 0;
+  // Capped at 10: the phone's clock can be a little behind the server's.
+  const minutesLeft = code ? Math.min(10, Math.ceil((code.expiresAt - now) / 60_000)) : 0;
   const expired = code !== null && minutesLeft <= 0;
 
   return (
