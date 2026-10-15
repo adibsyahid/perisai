@@ -206,6 +206,7 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
 2. **Ahmad:** phone check of P5 (onboarding, large text, Tetapan QR, Pasang) and Radar on the OPPO.
 3. iPhone check of push (iOS 16.4+, after Add to Home Screen) through a teammate.
 4. Before the video: decide whether to keep the 150 demo Radar reports (Radar shows "Termasuk data demo").
+5. Video + poster: script, pre-recording checklist and poster draft are in `docs/DEMO-VIDEO.md`.
 
 ## P0 phone test result (14 Oct, OPPO A92, Chrome)
 - Chrome menu shows **"Install and create shortcut"** (new name for installing a PWA). Installed fine, opens
