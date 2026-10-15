@@ -21,12 +21,15 @@ const WINDOW_MS = 10 * 60 * 1000;
 const MAX_SCANS = 20;
 const recentScans = new Map<string, number[]>();
 
-function isRateLimited(uid: string) {
+// /eval runs (≥70 samples) get their own, larger budget so they don't block normal scans.
+const MAX_EVAL_SCANS = 100;
+
+function isRateLimited(key: string, max: number) {
   const now = Date.now();
-  const times = (recentScans.get(uid) ?? []).filter((t) => now - t < WINDOW_MS);
+  const times = (recentScans.get(key) ?? []).filter((t) => now - t < WINDOW_MS);
   times.push(now);
-  recentScans.set(uid, times);
-  return times.length > MAX_SCANS;
+  recentScans.set(key, times);
+  return times.length > max;
 }
 
 function fail(code: ScanErrorCode, status: number) {
@@ -41,7 +44,7 @@ function verdictFor(score: number): Verdict {
 
 function parseRequest(body: unknown): ScanRequest | null {
   if (!body || typeof body !== "object") return null;
-  const { kind, lang, text, image, radar } = body as Partial<ScanRequest>;
+  const { kind, lang, text, image, radar, evaluation } = body as Partial<ScanRequest>;
   if (!["text", "link", "number", "image"].includes(kind ?? "")) return null;
   const cleanText = typeof text === "string" ? text.slice(0, MAX_TEXT) : "";
   const cleanImage =
@@ -49,16 +52,23 @@ function parseRequest(body: unknown): ScanRequest | null {
       ? image
       : undefined;
   if (!cleanText.trim() && !cleanImage) return null;
-  return { kind: kind!, lang: lang === "en" ? "en" : "ms", text: cleanText, image: cleanImage, radar: radar !== false };
+  return {
+    kind: kind!,
+    lang: lang === "en" ? "en" : "ms",
+    text: cleanText,
+    image: cleanImage,
+    radar: radar !== false,
+    evaluation: evaluation === true,
+  };
 }
 
 export async function POST(request: Request) {
   const uid = await verifyRequest(request);
   if (!uid) return fail("auth", 401);
-  if (isRateLimited(uid)) return fail("rate_limited", 429);
-
   const scan = parseRequest(await request.json().catch(() => null));
   if (!scan) return fail("bad_input", 400);
+  const limited = scan.evaluation ? isRateLimited(`eval:${uid}`, MAX_EVAL_SCANS) : isRateLimited(uid, MAX_SCANS);
+  if (limited) return fail("rate_limited", 429);
 
   const links = checkLinks(scan.text ?? "");
 
@@ -91,7 +101,8 @@ export async function POST(request: Request) {
 
   // after() runs once the answer is sent, so the person waiting for the verdict
   // is never slowed down by the family alert or the Radar report.
-  if (result.verdict === "SCAM") {
+  // Evaluation runs only measure accuracy: no family alert, no Radar dot.
+  if (result.verdict === "SCAM" && !scan.evaluation) {
     // Alert the family (BLUEPRINT F3).
     after(async () => {
       try {
@@ -101,7 +112,7 @@ export async function POST(request: Request) {
       }
     });
   }
-  if ((result.verdict === "SCAM" || result.verdict === "MENCURIGAKAN") && scan.radar) {
+  if ((result.verdict === "SCAM" || result.verdict === "MENCURIGAKAN") && scan.radar && !scan.evaluation) {
     // Anonymous dot on Radar Scam (BLUEPRINT F4): type, verdict, state and time only.
     after(async () => {
       try {

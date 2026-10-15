@@ -1,6 +1,6 @@
 # PERISAI progress
 
-_Last updated: 15 Oct 2026 (P0–P5 done and live; P6 evaluation next)_
+_Last updated: 15 Oct 2026 (P0–P5 done and live; P6 evaluation started)_
 
 Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**. The old Flutter P0 is in git tag `flutter-p0`.
 
@@ -177,8 +177,15 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
 - Lighthouse (mobile, live, 15 Oct): Accessibility **100** on Mula, Tetapan, Radar, Keluarga; Best Practices 96;
   Performance Mula 90, Tetapan 72, Keluarga 65, Radar 65 (was 38; CLS 0.61 → 0.07).
 
+### P6 Evaluation (started 15 Oct)
+- `/api/scan` accepts `evaluation: true`: no family alert, no Radar report, own rate limit (100 per 10 min).
+- QR PNG for the poster is ready: `public/qr/perisai-qr-poster.png`.
+
 ## Next
-1. P6: evaluation runner on `/eval` (needs the team's real samples: ≥50 scams + ≥20 legit).
+1. P6: build the runner UI on `/eval`: `public/eval/samples.json` ({id, label scam|legit, scamType, text or image}),
+   paced runs (~1 every 4 s, resumable via localStorage, `runScan(..., { evaluation: true })`), metrics
+   (accuracy, precision, recall, false-alarm rate, avg time; flagged = SCAM or MENCURIGAKAN), per-type table,
+   CSV export. **Team:** collect ≥50 real scams + ≥20 real legit messages (personal details blurred).
 2. Ahmad: phone check of P5 (onboarding, large text, Tetapan QR, Pasang) and Radar on the OPPO.
 3. iPhone check of push (iOS 16.4+, after Add to Home Screen) through a teammate.
 

@@ -30,6 +30,7 @@ export type ScanRequest = {
   text?: string;
   image?: { data: string; mimeType: string }; // base64, already resized on the phone
   radar?: boolean; // false = the user turned off anonymous Radar reports in Tetapan
+  evaluation?: boolean; // /eval run: no family alert, no Radar report, separate rate limit
 };
 
 export type RedFlag = { quote: string; reason: string };
