@@ -34,14 +34,20 @@ async function shrinkImage(file: File): Promise<{ data: string; mimeType: string
   }
 }
 
-export async function runScan(input: ScanInput, lang: "ms" | "en"): Promise<ScanResult> {
+// `evaluation` is set by /eval: the server then skips family alerts and Radar dots.
+export async function runScan(
+  input: ScanInput,
+  lang: "ms" | "en",
+  options: { evaluation?: boolean } = {},
+): Promise<ScanResult> {
   if (!navigator.onLine) throw new ScanError("offline");
 
   const radar = getPref("radar");
+  const evaluation = options.evaluation === true;
   const body: ScanRequest =
     input.kind === "image"
-      ? { kind: "image", lang, radar, image: await shrinkImage(input.file) }
-      : { kind: input.kind, lang, radar, text: redact(normalise(input.text)) };
+      ? { kind: "image", lang, radar, evaluation, image: await shrinkImage(input.file) }
+      : { kind: input.kind, lang, radar, evaluation, text: redact(normalise(input.text)) };
 
   let response: Response;
   try {
