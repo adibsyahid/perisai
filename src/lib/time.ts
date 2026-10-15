@@ -1,6 +1,6 @@
 // "2 min lalu" / "2 min ago", using the phone's built-in translations (Intl).
-export function timeAgo(timestamp: number, locale: "ms" | "en") {
-  const seconds = Math.round((timestamp - Date.now()) / 1000);
+export function timeAgo(timestamp: number, locale: "ms" | "en", now = Date.now()) {
+  const seconds = Math.min(0, Math.round((timestamp - now) / 1000));
   const format = new Intl.RelativeTimeFormat(locale === "ms" ? "ms" : "en", { numeric: "auto", style: "short" });
   const units: [Intl.RelativeTimeFormatUnit, number][] = [
     ["day", 86400],

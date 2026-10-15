@@ -29,6 +29,7 @@ export type ScanRequest = {
   lang: "ms" | "en";
   text?: string;
   image?: { data: string; mimeType: string }; // base64, already resized on the phone
+  radar?: boolean; // false = the user turned off anonymous Radar reports in Tetapan
 };
 
 export type RedFlag = { quote: string; reason: string };

@@ -1,12 +1,13 @@
 "use client";
 
-import { Check, Languages } from "lucide-react";
+import { Check, Languages, Radar } from "lucide-react";
 import { PageHeader, PageShell } from "@/components/page-shell";
+import { PrefSwitch } from "@/components/pref-switch";
 import { LOCALES, useI18n } from "@/lib/i18n";
 import { syncLocale } from "@/lib/profile";
 import { cn } from "@/lib/utils";
 
-// Tetapan (settings). P0 has the language switch; more settings come later.
+// Tetapan (settings): language and anonymous Radar sharing; more settings come in P5.
 export default function SettingsPage() {
   const { t, locale, setLocale } = useI18n();
 
@@ -65,6 +66,8 @@ export default function SettingsPage() {
           })}
         </div>
       </section>
+
+      <PrefSwitch pref="radar" icon={Radar} title={t.settings.radarShare} hint={t.settings.radarShareHint} />
     </PageShell>
   );
 }

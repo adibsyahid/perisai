@@ -1,6 +1,7 @@
 import { after } from "next/server";
 import { verifyRequest } from "@/lib/firebase-admin";
 import { notifyGuardians } from "@/lib/family-server";
+import { addReport } from "@/lib/radar-server";
 import { askGemini } from "@/lib/gemini";
 import { checkLinks } from "@/lib/heuristics";
 import { bm } from "@/lib/i18n/bm";
@@ -40,7 +41,7 @@ function verdictFor(score: number): Verdict {
 
 function parseRequest(body: unknown): ScanRequest | null {
   if (!body || typeof body !== "object") return null;
-  const { kind, lang, text, image } = body as Partial<ScanRequest>;
+  const { kind, lang, text, image, radar } = body as Partial<ScanRequest>;
   if (!["text", "link", "number", "image"].includes(kind ?? "")) return null;
   const cleanText = typeof text === "string" ? text.slice(0, MAX_TEXT) : "";
   const cleanImage =
@@ -48,7 +49,7 @@ function parseRequest(body: unknown): ScanRequest | null {
       ? image
       : undefined;
   if (!cleanText.trim() && !cleanImage) return null;
-  return { kind: kind!, lang: lang === "en" ? "en" : "ms", text: cleanText, image: cleanImage };
+  return { kind: kind!, lang: lang === "en" ? "en" : "ms", text: cleanText, image: cleanImage, radar: radar !== false };
 }
 
 export async function POST(request: Request) {
@@ -88,14 +89,25 @@ export async function POST(request: Request) {
     extracted: { ...ai.extracted, urls: [...new Set([...ai.extracted.urls, ...links.urls])] },
   };
 
-  // SCAM: alert the family (BLUEPRINT F3). after() runs once the answer is sent,
-  // so the person waiting for the verdict is never slowed down.
+  // after() runs once the answer is sent, so the person waiting for the verdict
+  // is never slowed down by the family alert or the Radar report.
   if (result.verdict === "SCAM") {
+    // Alert the family (BLUEPRINT F3).
     after(async () => {
       try {
         await notifyGuardians(uid, result);
       } catch (error) {
         console.error("scan: guardian alert failed", (error as Error).name);
+      }
+    });
+  }
+  if ((result.verdict === "SCAM" || result.verdict === "MENCURIGAKAN") && scan.radar) {
+    // Anonymous dot on Radar Scam (BLUEPRINT F4): type, verdict, state and time only.
+    after(async () => {
+      try {
+        await addReport(uid, result.verdict, result.scamType);
+      } catch (error) {
+        console.error("scan: radar report failed", (error as Error).name);
       }
     });
   }

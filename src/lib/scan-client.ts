@@ -1,5 +1,6 @@
 // Phone side of a scan: tidy and redact the input, shrink images, call /api/scan.
 import { getIdToken } from "./firebase-client";
+import { getPref } from "./prefs";
 import { normalise, redact } from "./redact";
 import type { ScanErrorCode, ScanKind, ScanRequest, ScanResult } from "./scan-types";
 
@@ -36,10 +37,11 @@ async function shrinkImage(file: File): Promise<{ data: string; mimeType: string
 export async function runScan(input: ScanInput, lang: "ms" | "en"): Promise<ScanResult> {
   if (!navigator.onLine) throw new ScanError("offline");
 
+  const radar = getPref("radar");
   const body: ScanRequest =
     input.kind === "image"
-      ? { kind: "image", lang, image: await shrinkImage(input.file) }
-      : { kind: input.kind, lang, text: redact(normalise(input.text)) };
+      ? { kind: "image", lang, radar, image: await shrinkImage(input.file) }
+      : { kind: input.kind, lang, radar, text: redact(normalise(input.text)) };
 
   let response: Response;
   try {
