@@ -1,6 +1,6 @@
 # PERISAI progress
 
-_Last updated: 15 Oct 2026 (P0–P6 code done and live; waiting for real eval samples and phone checks)_
+_Last updated: 17 Oct 2026 (P0–P6 done; iPhone push passed; waiting for real eval samples)_
 
 Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**. The old Flutter P0 is in git tag `flutter-p0`.
 
@@ -204,7 +204,10 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
 ## Next
 1. **Team:** real samples (above), then run the evaluation and put the headline sentence on the poster/video.
 2. **Ahmad:** phone check of P5 (onboarding, large text, Tetapan QR, Pasang) and Radar on the OPPO.
-3. iPhone check of push (iOS 16.4+, after Add to Home Screen) through a teammate.
+3. ~~iPhone check of push~~ **Passed 17 Oct**: teammate Fahim's iPhone (installed via Add to Home Screen)
+   paired as Adib's guardian and received the SCAM alert (push via web.push.apple.com, test push 201).
+   Note: a scan made *before* the guardian finishes pairing raises no alert (expected).
+   Still to note from the iPhone: iOS version, which voice language it uses, Tampal & Imbas "Allow Paste".
 4. Before the video: decide whether to keep the 150 demo Radar reports (Radar shows "Termasuk data demo").
 5. Video + poster: script, pre-recording checklist and poster draft are in `docs/DEMO-VIDEO.md`.
 
