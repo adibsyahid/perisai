@@ -15,6 +15,20 @@ export function canSpeak() {
   return typeof window !== "undefined" && "speechSynthesis" in window;
 }
 
+let warmedUp = false;
+
+// iPhones load their voice list slowly and only start the speech engine after a tap.
+// Call this INSIDE the tap that starts a scan: it begins loading the voices and speaks
+// one silent utterance, so the verdict can be read aloud the moment it arrives.
+export function warmUpSpeech() {
+  if (!canSpeak() || warmedUp) return;
+  warmedUp = true;
+  window.speechSynthesis.getVoices();
+  const silent = new SpeechSynthesisUtterance(" ");
+  silent.volume = 0;
+  window.speechSynthesis.speak(silent);
+}
+
 export function speak(text: string, lang: "ms" | "en", onEnd?: () => void) {
   if (!canSpeak()) return;
   window.speechSynthesis.cancel();

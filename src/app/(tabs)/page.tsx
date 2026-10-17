@@ -13,6 +13,7 @@ import { useI18n } from "@/lib/i18n";
 import { isOnboarded } from "@/lib/onboarding";
 import type { ScanInput } from "@/lib/scan-client";
 import { setPendingScan } from "@/lib/scan-session";
+import { warmUpSpeech } from "@/lib/speech";
 
 // Utama (home): every way to start a scan, plus the latest results.
 export default function HomePage() {
@@ -33,6 +34,7 @@ export default function HomePage() {
   }
 
   function openSheet(mode: TextMode) {
+    warmUpSpeech(); // inside the tap, so the verdict can be spoken without delay
     setNotice("");
     setSheetKey((k) => k + 1); // a fresh, empty sheet every time
     setSheet(mode);
@@ -42,6 +44,7 @@ export default function HomePage() {
 
   // One tap for the common case: the message is already copied (also the iPhone flow).
   async function pasteAndScan() {
+    warmUpSpeech(); // before any await: iPhone only allows it during the tap itself
     setNotice("");
     try {
       const text = (await navigator.clipboard.readText()).trim();
@@ -138,6 +141,7 @@ export default function HomePage() {
                   onChange={(e) => {
                     const file = e.target.files?.[0];
                     e.target.value = ""; // allow choosing the same picture again later
+                    warmUpSpeech();
                     if (file) startScan({ kind: "image", file });
                   }}
                 />
