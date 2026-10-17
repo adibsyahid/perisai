@@ -207,6 +207,8 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
 3. ~~iPhone check of push~~ **Passed 17 Oct**: teammate Fahim's iPhone (installed via Add to Home Screen)
    paired as Adib's guardian and received the SCAM alert (push via web.push.apple.com, test push 201).
    Note: a scan made *before* the guardian finishes pairing raises no alert (expected).
+   Voice works on the iPhone but started late; fixed 17 Oct with `warmUpSpeech()` (speech.ts), called inside
+   the scan taps on Utama (silent utterance + early voice-list load). Re-check on the iPhone.
    Still to note from the iPhone: iOS version, which voice language it uses, Tampal & Imbas "Allow Paste".
 4. Before the video: decide whether to keep the 150 demo Radar reports (Radar shows "Termasuk data demo").
 5. Video + poster: script, pre-recording checklist and poster draft are in `docs/DEMO-VIDEO.md`.
