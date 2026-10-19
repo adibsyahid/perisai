@@ -1,6 +1,6 @@
 # PERISAI progress
 
-_Last updated: 17 Oct 2026 (P0–P6 done; iPhone push passed; waiting for real eval samples)_
+_Last updated: 19 Oct 2026 (P0–P6 done; video brief ready; waiting for real eval samples)_
 
 Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**. The old Flutter P0 is in git tag `flutter-p0`.
 
@@ -213,6 +213,8 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
    Still to note from the iPhone: iOS version, which voice language it uses, Tampal & Imbas "Allow Paste".
 4. Before the video: decide whether to keep the 150 demo Radar reports (Radar shows "Termasuk data demo").
 5. Video + poster: script, pre-recording checklist and poster draft are in `docs/DEMO-VIDEO.md`.
+   Shareable brief for the video teammate (19 Oct): https://claude.ai/artifact/C3hTV6Dcp8QnNzAHydBEQr
+   (private until Ahmad shares it from the page's Share menu). Plan: 20 Oct record, 21 Oct edit, 22 Oct submit.
 
 ## P0 phone test result (14 Oct, OPPO A92, Chrome)
 - Chrome menu shows **"Install and create shortcut"** (new name for installing a PWA). Installed fine, opens
