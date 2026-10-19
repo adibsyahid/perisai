@@ -1,6 +1,6 @@
 # PERISAI progress
 
-_Last updated: 19 Oct 2026 (P0–P6 done; final eval done; video + poster briefs have the real numbers)_
+_Last updated: 19 Oct 2026 (P0–P6 done; final eval done; briefs rewritten to the official i3EC'26 rules)_
 
 Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**. The old Flutter P0 is in git tag `flutter-p0`.
 
@@ -231,7 +231,23 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
    (shared "Anyone with the link"). Plan: 20 Oct record, 21 Oct edit, 22 Oct submit.
    Poster brief (19 Oct): https://claude.ai/artifact/1QknsUH8CBWkFMfuzyPXQy (shared "Anyone with the link").
    Both briefs now carry the real results (20 real messages: 9/9 scams, 0/11 false alarms after tuning,
-   5/11 on the first run, 2.3 s average). Video shot 5 = record the /eval result screen on the laptop.
+   5/11 on the first run, 2.3 s average). Video shot 9 = record the /eval result screen on the laptop.
+6. **Official i3EC'26 rules (read from the organiser's site on 19 Oct, both briefs rewritten to match):**
+   - Site: https://sites.google.com/gapps.kptm.edu.my/i3ec2026 (Kolej Poly-Tech MARA Kuantan). Contact: Ts. Aizat.
+   - **23 Oct:** poster + video + payment proof, all through the "Product Video and Payment Proof" form on the
+     Video & Payment page. Judging online 26 Oct – 9 Nov. Results 12 Nov.
+   - **Fee:** Tertiary Student RM100 by online transfer (details on the Video & Payment page). Reference 1 is the
+     Participant ID from the LOA. The LOA fee exemption is for the School category only, so we pay. Ahmad pays.
+   - **LOA** should arrive 7 days after registration (registered 29 Sep). Not found in the inbox by search
+     (spam is not searchable from here). Ahmad must check Spam, or ask the organiser for the Participant ID.
+   - **Video:** max 7 min, 720p/1080p, BM or EN, YouTube **Unlisted**. Must cover 9 items: title & category,
+     team & institution, problem, background/features/objectives, methodology, result, novelty,
+     commercialisation potential, impact. Video brief v4 = 12-shot, about 4-minute script in that order.
+   - **Poster:** official Google Slides template (header: title, participants, institution logo, flag; then
+     Product Description | Methodology / Objective | Market Potential / Novelty & Uniqueness | Impact).
+     Title must match registration: "PERISAI: AI-POWERED FAMILY ANTI-SCAM GUARDIAN". Poster brief v3 follows it.
+   - Rules say teams of up to 5 including the leader; the registration lists 6 names. Ahmad to confirm with
+     the organiser (one may be the supervisor).
 
 ## P0 phone test result (14 Oct, OPPO A92, Chrome)
 - Chrome menu shows **"Install and create shortcut"** (new name for installing a PWA). Installed fine, opens
