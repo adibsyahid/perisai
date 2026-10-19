@@ -226,6 +226,12 @@ content in redFlags. Write headline, summary, reasons and actions in simple, cal
 {LANGUAGE} for an elderly reader: short sentences, no jargon, and always a clear next step.
 Never ask the user for personal information.
 ```
+**Calibration (added 19 Oct, appended after the instruction above, see `src/lib/gemini.ts`):** the first run on real
+messages called 5 of 11 genuine messages MENCURIGAKAN (job adverts, a promo, a real Maybank notice). The appended
+text tells the model to decide on concrete risk signals (links, money/OTP/details requests, numbers to call, threats,
+too-good-to-be-true offers), to treat ordinary adverts, marketing with unsubscribe, and "RM0" bank/telco notices that
+point to the official app as SELAMAT, and to use MENCURIGAKAN only when a concrete signal exists.
+
 **Response schema (JSON):**
 ```
 verdict: enum [SCAM, MENCURIGAKAN, SELAMAT, TIDAK_PASTI]

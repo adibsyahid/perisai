@@ -21,6 +21,25 @@ content in redFlags. Write headline, summary, reasons and actions in simple, cal
 {LANGUAGE} for an elderly reader: short sentences, no jargon, and always a clear next step.
 Never ask the user for personal information.`;
 
+// Added 19 Oct after the first run on real messages: 5 of 11 genuine messages (job
+// adverts, a promo, a real Maybank notice) were called MENCURIGAKAN. This calibration
+// is appended to the BLUEPRINT instruction above, which stays unchanged.
+const CALIBRATION = `Calibration for real Malaysian messages:
+- Decide on concrete risk signals: a link or app to open, a request for money, a deposit or a fee,
+  OTP/TAC, passwords, card or bank details, a phone or WhatsApp number given to "verify" or "claim",
+  threats or deadlines, impersonation of an official body, or offers that are too good to be true
+  (high pay for easy tasks, guaranteed returns, prizes the person never entered).
+- If no such signal is present, the verdict is SELAMAT, even for commercial, promotional or unknown
+  senders. Ordinary job vacancies and small-business adverts that only invite people to get in touch,
+  with realistic pay and no upfront fee, are SELAMAT; suggest normal checks in actions. Marketing
+  messages with an unsubscribe option are SELAMAT.
+- Genuine bank and telco notices often start with "RM0", report a completed transaction, top-up or
+  settings change, and tell the person to use the official app or call the bank or telco without
+  giving a number or link. Treat these as SELAMAT. Scam versions add a link, or give a specific
+  number to call or message.
+- Use MENCURIGAKAN only when at least one concrete risk signal is present but the message could
+  still be genuine.`;
+
 // Flash-Lite sometimes drifts into Indonesian words ("pesan", "iming-iming"),
 // so the Malay option names the Malaysian standard explicitly.
 const LANGUAGE_NAMES = {
@@ -110,7 +129,7 @@ export async function askGemini(request: ScanRequest): Promise<GeminiAnswer> {
         model: list[i],
         contents: [{ role: "user", parts: buildParts(request) }],
         config: {
-          systemInstruction: SYSTEM_INSTRUCTION.replace("{LANGUAGE}", LANGUAGE_NAMES[request.lang]),
+          systemInstruction: `${SYSTEM_INSTRUCTION.replace("{LANGUAGE}", LANGUAGE_NAMES[request.lang])}\n\n${CALIBRATION}`,
           responseMimeType: "application/json",
           responseJsonSchema: RESPONSE_SCHEMA,
           temperature: 0.2,

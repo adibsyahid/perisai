@@ -189,6 +189,16 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
   8/8 caught, 0 false alarms, 8/8 right type, 2.4 s average. **Not evidence**: the team must replace them.
 - QR PNG for the poster: `public/qr/perisai-qr-poster.png`.
 
+### Evaluation on real messages (19 Oct)
+- Real set so far: 9 scams (5 Maybank official alert page, 4 Pos Malaysia official scam page) + 11 legit
+  (4 Facebook posts, 1 Maybank alert SMS, 6 from Ahmad's inbox). Personal details removed.
+- First live run: 9/9 scams caught (all SCAM, right type) but **5/11 legit flagged MENCURIGAKAN** (45% false alarms).
+- Fix: calibration appended to the Gemini system instruction (BLUEPRINT F1 updated). Local re-test, AI only:
+  real 20/20, examples 12/12.
+- **Honesty note:** the calibration was written after seeing these 20 messages, so a re-run on the same 20 is
+  optimistic. The numbers for the poster/video should come from **new** real messages collected after 19 Oct
+  (or report both runs openly).
+
 ## How the team adds real samples (for the judges' numbers)
 1. Collect ≥50 real scam messages and ≥20 real legitimate ones (bank, courier, government, family).
    Blur or replace names, IC, phone and account numbers of real people.
