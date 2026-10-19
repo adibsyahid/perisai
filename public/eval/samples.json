@@ -53,5 +53,29 @@
     "id": "mbb-sah-01",
     "label": "legit",
     "text": "RM0 MBB: SCAM ALERT: SMS from 66628 claiming Maybank points expiry is FAKE! Maybank NEVER includes web links in SMS. Do NOT click or provide info. Stay alert!"
+  },
+  {
+    "id": "pos-scam-01",
+    "label": "scam",
+    "scamType": "parcel",
+    "text": "NOTICE: Your item has been delivered to the warehouse but delivery has been stopped due to unclear address information. Please update your address for delivery. https://is.gd/lLNxkJ?asL=CNohA1ZgKB (Reply with \"Y\" and then stop sending the SMS and re-open it to activate the link, or copy the link and open it in Chrome)"
+  },
+  {
+    "id": "pos-scam-02",
+    "label": "scam",
+    "scamType": "parcel",
+    "text": "Delivery suspended because your delivery note does not include a house number. Please update as soon as possible. http://tinyurl.com/4nbjbmtk?WqL=VHcHvrRoO7"
+  },
+  {
+    "id": "pos-scam-03",
+    "label": "scam",
+    "scamType": "parcel",
+    "text": "[Pos Malaysia] 2/2 delivery attempts were made. Please confirm your details otherwise your parcel will be returned: https://bit.ly/_Pos-malaysia"
+  },
+  {
+    "id": "pos-scam-04",
+    "label": "scam",
+    "scamType": "parcel",
+    "text": "POS MALAYSIA Online Payment. For redelivery, we need to charge some service fees. Your package will be re-delivered after payment. lump sum: RM1.37. Cardholder. Card Number. Expire Date. Security Code (CVV)."
   }
 ]
