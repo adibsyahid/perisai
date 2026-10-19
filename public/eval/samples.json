@@ -18,5 +18,40 @@
     "id": "fb-sah-04",
     "label": "legit",
     "text": "JAWATAN KOSONG. PEMANDU LORI MIXER, KONKRIT DIPERLUKAN SEGERA! AREA KUANTAN. untuk pertanyaan sila hubungi [nombor telefon]"
+  },
+  {
+    "id": "mbb-scam-01",
+    "label": "scam",
+    "scamType": "phishing",
+    "text": "RM0 Maybank Reminder: Your accrued (16.200 points) will expire on March 20th, please click here for redemption details: https://maly***.top"
+  },
+  {
+    "id": "mbb-scam-02",
+    "label": "scam",
+    "scamType": "phishing",
+    "text": "Maybank2u reminds you that your Reward Points (5,036) will expire today. Please visit to redeem your New Year gift: https://mybank***ards"
+  },
+  {
+    "id": "mbb-scam-03",
+    "label": "scam",
+    "scamType": "phishing",
+    "text": "RMO Maybank Reminder: Your accumulated (16.200) points will expire today. Please pay attention to the details: https://may***p"
+  },
+  {
+    "id": "mbb-scam-04",
+    "label": "scam",
+    "scamType": "phishing",
+    "text": "Maybank: Your credit and debit card has been suspended. due to security issue's for More details and reactivation immediately call us at 800***305"
+  },
+  {
+    "id": "mbb-scam-05",
+    "label": "scam",
+    "scamType": "phishing",
+    "text": "RM0.00 M2U: Thank you for payment MYR 3569.00 with your crd ending 4313 at Carousell, Call 016******* if not use."
+  },
+  {
+    "id": "mbb-sah-01",
+    "label": "legit",
+    "text": "RM0 MBB: SCAM ALERT: SMS from 66628 claiming Maybank points expiry is FAKE! Maybank NEVER includes web links in SMS. Do NOT click or provide info. Stay alert!"
   }
 ]
