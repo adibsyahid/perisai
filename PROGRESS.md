@@ -198,7 +198,8 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
    (put the picture in `public/eval/images/`). Legit entries use `"label": "legit"` and no scamType.
    scamType values: parcel, authority_impersonation, job, investment, loan, phishing, malicious_apk,
    impersonation, romance, online_purchase, prize, govt_aid, other.
-3. Remove the `contoh-` entries, commit and push. Then Tetapan → tap "Versi 1.0" 7 times → Set semula →
+3. (19 Oct) `samples.json` now holds only real samples; Claude's 12 examples moved to `samples-examples.json`
+   (not used by `/eval`). Real so far: 4 legit Facebook posts (names and numbers removed). Commit and push. Then Tetapan → tap "Versi 1.0" 7 times → Set semula →
    Mula penilaian. 70 samples take about 5 minutes. Eksport CSV for the report.
 
 ## Next

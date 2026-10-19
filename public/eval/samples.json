@@ -1,70 +1,22 @@
 [
   {
-    "id": "contoh-01",
-    "label": "scam",
-    "scamType": "parcel",
-    "text": "POS LAJU: Bungkusan anda tidak dapat dihantar kerana alamat tidak lengkap. Sila bayar RM2.50 dalam 24 jam di https://poslaju-my.xyz/track atau bungkusan akan dipulangkan."
-  },
-  {
-    "id": "contoh-02",
-    "label": "scam",
-    "scamType": "authority_impersonation",
-    "text": "Ini panggilan dari PDRM Bukit Aman. Akaun bank anda terlibat dalam kes pengubahan wang haram. Pindahkan semua wang ke akaun selamat 8601234567 (Maybank) hari ini untuk siasatan. Jangan beritahu sesiapa."
-  },
-  {
-    "id": "contoh-03",
-    "label": "scam",
-    "scamType": "job",
-    "text": "Kerja part-time dari rumah! Like & review produk Shopee, dapat RM300 sehari. Daftar di Telegram @kerja_mudah_my dan bayar deposit RM50 untuk mula."
-  },
-  {
-    "id": "contoh-04",
-    "label": "scam",
-    "scamType": "investment",
-    "text": "Pelaburan emas digital dijamin untung 30% sebulan tanpa risiko! Ramai selebriti dah join. Minimum RM500. Hubungi pengurus akaun di wa.me/60123456789 sekarang, slot terhad."
-  },
-  {
-    "id": "contoh-05",
-    "label": "scam",
-    "scamType": "impersonation",
-    "text": "Hi mak, ni nombor baru saya. Phone lama rosak. Boleh tolong transfer RM800 dulu ke akaun 1640 2938 4471 untuk bayar hutang kawan? Esok saya bayar balik. Jangan call, saya tengah meeting."
-  },
-  {
-    "id": "contoh-06",
-    "label": "scam",
-    "scamType": "phishing",
-    "text": "MAYBANK2U: Akaun anda telah disekat kerana aktiviti mencurigakan. Sila log masuk di http://maybank2u-secure-login.top untuk mengaktifkan semula dalam masa 2 jam."
-  },
-  {
-    "id": "contoh-07",
-    "label": "scam",
-    "scamType": "malicious_apk",
-    "text": "Jemputan majlis perkahwinan Aisyah & Hakim. Sila muat turun kad jemputan digital di sini: Kad_Jemputan_Kahwin.apk"
-  },
-  {
-    "id": "contoh-08",
-    "label": "scam",
-    "scamType": "govt_aid",
-    "text": "Tahniah! Anda layak terima Bantuan STR RM500. Sila isi butiran akaun bank dan nombor TAC di https://str-bantuan.vip/daftar sebelum 20 Okt."
-  },
-  {
-    "id": "contoh-09",
+    "id": "fb-sah-01",
     "label": "legit",
-    "text": "Maybank: Transaksi RM150.00 di SHOPEE MALAYSIA menggunakan kad berakhir 4321 pada 14/10/2026. Jika anda tidak membuat transaksi ini, hubungi 1-300-88-6688 (nombor di belakang kad anda). Maybank tidak akan meminta TAC atau kata laluan anda."
+    "text": "Assalamualaikum selamat pagi sy dari [nama kedai] ade buat repair service restore dan up spec motorsikal spe2 yg nak service nak restore nak up spec motor blh wsap sy di [nombor telefon]"
   },
   {
-    "id": "contoh-10",
+    "id": "fb-sah-02",
     "label": "legit",
-    "text": "Pos Malaysia: Bungkusan anda ER123456789MY sedang dalam penghantaran dan dijangka tiba hari ini. Semak status di aplikasi Pos Malaysia atau pos.com.my."
+    "text": "SERVICE BUAT RESUME PROFESIONAL. Nak mohon kerja tapi resume tak menarik? Kami bantu hasilkan resume yang kemas, profesional dan mesra HR! Harga bermula dari RM8 sahaja! Rekaan kemas & profesional, sesuai untuk fresh graduate & yang sudah bekerja, boleh edit resume lama, format mesra HR."
   },
   {
-    "id": "contoh-11",
+    "id": "fb-sah-03",
     "label": "legit",
-    "text": "Klinik Kesihatan Beranang: Peringatan temujanji anda pada 18/10/2026 jam 9.00 pagi. Sila bawa kad pengenalan. Balas YA untuk sahkan."
+    "text": "JOB VACANCY. JOM SERTAI TEAM [nama syarikat]. Kami memerlukan korang untuk mengisi jawatan kosong berikut: Manager, Assistant Manager, Beautician, Hairstylist. Untuk seluruh cawangan Pahang. Jom bersama kami!"
   },
   {
-    "id": "contoh-12",
+    "id": "fb-sah-04",
     "label": "legit",
-    "text": "Mak, saya dah sampai kolej. Nanti malam saya call. Jangan lupa makan ubat ya."
+    "text": "JAWATAN KOSONG. PEMANDU LORI MIXER, KONKRIT DIPERLUKAN SEGERA! AREA KUANTAN. untuk pertanyaan sila hubungi [nombor telefon]"
   }
 ]
