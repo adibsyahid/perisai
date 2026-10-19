@@ -77,5 +77,35 @@
     "label": "scam",
     "scamType": "parcel",
     "text": "POS MALAYSIA Online Payment. For redelivery, we need to charge some service fees. Your package will be re-delivered after payment. lump sum: RM1.37. Cardholder. Card Number. Expire Date. Security Code (CVV)."
+  },
+  {
+    "id": "inbox-sah-01",
+    "label": "legit",
+    "text": "RM0: The U Prepaid 40 plan auto-renewal was unsuccessful. Top up via MyUMobile app easily or get instant credit advance via CreditSOS to renew your plan."
+  },
+  {
+    "id": "inbox-sah-02",
+    "label": "legit",
+    "text": "RM0: Top Up successful. Balance of RM48.65 is available till 19/12/2026. Download MyUMobile App to subscribe to Unlimited Data & Calls + Hotspot"
+  },
+  {
+    "id": "inbox-sah-03",
+    "label": "legit",
+    "text": "RM0: RM40.00 charged for U Prepaid 40. Next renewal on 27/10/2026 19:12. Check status via MyUMobile App."
+  },
+  {
+    "id": "inbox-sah-04",
+    "label": "legit",
+    "text": "MISS BIGO INTERNATIONAL 2026. The Queen's Crowning Moment Awaits 10th ANNIVERSARY of BIGO LIVE - Reply 【STOP】 to unsubscribe"
+  },
+  {
+    "id": "inbox-sah-05",
+    "label": "legit",
+    "text": "RM0 M2U: You have successfully updated your Scan & Pay limit. Your daily limit is RM600.00. Not you? Call Maybank now."
+  },
+  {
+    "id": "inbox-sah-06",
+    "label": "legit",
+    "text": "RM0. Hai [nama], adakah anda akan mengesyorkan U Mobile kepada rakan dan keluarga? Sila pilih penilaian diantara 10 (mengesyorkan) dan 0 (tidak mengesyorkan). Tiada bayaran akan dikenakan atas maklum balas anda. Terima kasih."
   }
 ]
