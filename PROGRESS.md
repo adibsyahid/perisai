@@ -1,6 +1,6 @@
 # PERISAI progress
 
-_Last updated: 19 Oct 2026 (P0–P6 done; video brief ready; waiting for real eval samples)_
+_Last updated: 19 Oct 2026 (P0–P6 done; final eval done; video + poster briefs have the real numbers)_
 
 Stack: **PWA, Next.js 16.4 (App Router) + TypeScript + Tailwind v4 + shadcn/ui**. The old Flutter P0 is in git tag `flutter-p0`.
 
@@ -228,9 +228,10 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
 4. Before the video: decide whether to keep the 150 demo Radar reports (Radar shows "Termasuk data demo").
 5. Video + poster: script, pre-recording checklist and poster draft are in `docs/DEMO-VIDEO.md`.
    Shareable brief for the video teammate (19 Oct): https://claude.ai/artifact/C3hTV6Dcp8QnNzAHydBEQr
-   (private until Ahmad shares it from the page's Share menu). Plan: 20 Oct record, 21 Oct edit, 22 Oct submit.
-   Poster brief (19 Oct): https://claude.ai/artifact/1QknsUH8CBWkFMfuzyPXQy (also private until shared).
-   The poster's results block waits for the real evaluation numbers.
+   (shared "Anyone with the link"). Plan: 20 Oct record, 21 Oct edit, 22 Oct submit.
+   Poster brief (19 Oct): https://claude.ai/artifact/1QknsUH8CBWkFMfuzyPXQy (shared "Anyone with the link").
+   Both briefs now carry the real results (20 real messages: 9/9 scams, 0/11 false alarms after tuning,
+   5/11 on the first run, 2.3 s average). Video shot 5 = record the /eval result screen on the laptop.
 
 ## P0 phone test result (14 Oct, OPPO A92, Chrome)
 - Chrome menu shows **"Install and create shortcut"** (new name for installing a PWA). Installed fine, opens
