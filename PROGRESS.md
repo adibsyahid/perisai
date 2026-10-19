@@ -215,6 +215,8 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
 5. Video + poster: script, pre-recording checklist and poster draft are in `docs/DEMO-VIDEO.md`.
    Shareable brief for the video teammate (19 Oct): https://claude.ai/artifact/C3hTV6Dcp8QnNzAHydBEQr
    (private until Ahmad shares it from the page's Share menu). Plan: 20 Oct record, 21 Oct edit, 22 Oct submit.
+   Poster brief (19 Oct): https://claude.ai/artifact/1QknsUH8CBWkFMfuzyPXQy (also private until shared).
+   The poster's results block waits for the real evaluation numbers.
 
 ## P0 phone test result (14 Oct, OPPO A92, Chrome)
 - Chrome menu shows **"Install and create shortcut"** (new name for installing a PWA). Installed fine, opens
