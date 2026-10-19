@@ -289,7 +289,7 @@ export const en: Dictionary = {
     failed: "Failed. Try again.",
     runTitle: "AI accuracy",
     runHint:
-      "Runs every sample in public/eval/samples.json through PERISAI, one every 4 seconds (free-tier limit). Results are saved on this phone, so a run can be resumed.",
+      "Runs every sample in public/eval/samples.json through PERISAI, one every 6 seconds (free-tier limit). Results are saved on this phone, so a run can be resumed.",
     samplesInfo: "{total} samples: {scams} scams, {legit} legitimate messages",
     tooFew: "For strong evidence, use at least 50 real scams and 20 real legitimate messages.",
     examplesWarning: "These are still example samples. Replace them with real messages before using the numbers for judges.",

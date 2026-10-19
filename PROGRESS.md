@@ -195,6 +195,9 @@ so the WhatsApp demo uses Copy → **Tampal & Imbas**. Share to PERISAI still wo
 - First live run: 9/9 scams caught (all SCAM, right type) but **5/11 legit flagged MENCURIGAKAN** (45% false alarms).
 - Fix: calibration appended to the Gemini system instruction (BLUEPRINT F1 updated). Local re-test, AI only:
   real 20/20, examples 12/12.
+- **Final live run (19 Oct, calibrated):** 9/9 scams caught (all SCAM, right type), **0/11 false alarms**,
+  average 2.3 s. Runner pace raised from 4 s to 6 s after Gemini free-tier "busy" errors.
+- Team decision (19 Oct): stop collecting; use these 20 with the honest framing below.
 - **Honesty note:** the calibration was written after seeing these 20 messages, so a re-run on the same 20 is
   optimistic. The numbers for the poster/video should come from **new** real messages collected after 19 Oct
   (or report both runs openly).

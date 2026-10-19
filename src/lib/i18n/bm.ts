@@ -290,7 +290,7 @@ export const bm = {
     failed: "Gagal. Cuba lagi.",
     runTitle: "Ketepatan AI",
     runHint:
-      "Jalankan setiap sampel dalam public/eval/samples.json melalui PERISAI, satu setiap 4 saat (had tier percuma). Keputusan disimpan dalam telefon ini, jadi boleh disambung semula.",
+      "Jalankan setiap sampel dalam public/eval/samples.json melalui PERISAI, satu setiap 6 saat (had tier percuma). Keputusan disimpan dalam telefon ini, jadi boleh disambung semula.",
     samplesInfo: "{total} sampel: {scams} scam, {legit} mesej sah",
     tooFew: "Untuk bukti yang kukuh, guna sekurang-kurangnya 50 scam dan 20 mesej sah sebenar.",
     examplesWarning: "Sampel ini masih contoh. Gantikan dengan mesej sebenar sebelum guna angka untuk juri.",

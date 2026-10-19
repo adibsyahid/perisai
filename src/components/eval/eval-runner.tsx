@@ -16,8 +16,8 @@ import {
 import { useI18n } from "@/lib/i18n";
 import { runScan, ScanError, type ScanInput } from "@/lib/scan-client";
 
-// One request every 4 s stays under the Gemini free-tier rate limit.
-const PACE_MS = 4000;
+// One request every 6 s stays under the Gemini free-tier rate limit (4 s hit "busy" on 19 Oct).
+const PACE_MS = 6000;
 const pause = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const percent = (value: number) => `${Math.round(value * 100)}%`;
 
